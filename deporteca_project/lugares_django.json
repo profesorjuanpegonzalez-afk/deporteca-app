@@ -1,0 +1,1133 @@
+﻿[
+{
+    "model": "lugares.comunidadautonoma",
+    "pk": 1,
+    "fields": {
+        "nombre": "Comunidad de Madrid"
+    }
+},
+{
+    "model": "lugares.comunidadautonoma",
+    "pk": 2,
+    "fields": {
+        "nombre": "Galicia"
+    }
+},
+{
+    "model": "lugares.comunidadautonoma",
+    "pk": 3,
+    "fields": {
+        "nombre": "Castilla la Mancha"
+    }
+},
+{
+    "model": "lugares.comunidadautonoma",
+    "pk": 4,
+    "fields": {
+        "nombre": "Castilla y Le�n"
+    }
+},
+{
+    "model": "lugares.comunidadautonoma",
+    "pk": 5,
+    "fields": {
+        "nombre": "Asturias"
+    }
+},
+{
+    "model": "lugares.provincia",
+    "pk": 1,
+    "fields": {
+        "nombre": "Madrid",
+        "comunidad_autonoma": 1
+    }
+},
+{
+    "model": "lugares.provincia",
+    "pk": 2,
+    "fields": {
+        "nombre": "Toledo",
+        "comunidad_autonoma": 3
+    }
+},
+{
+    "model": "lugares.provincia",
+    "pk": 3,
+    "fields": {
+        "nombre": "Burgos",
+        "comunidad_autonoma": 4
+    }
+},
+{
+    "model": "lugares.provincia",
+    "pk": 4,
+    "fields": {
+        "nombre": "Ciudad Real",
+        "comunidad_autonoma": 3
+    }
+},
+{
+    "model": "lugares.provincia",
+    "pk": 5,
+    "fields": {
+        "nombre": "Le�n",
+        "comunidad_autonoma": 4
+    }
+},
+{
+    "model": "lugares.provincia",
+    "pk": 6,
+    "fields": {
+        "nombre": "Asturias",
+        "comunidad_autonoma": 5
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 1,
+    "fields": {
+        "nombre": "Baloncesto",
+        "icon_image": "images/sport_icons/basket_8siZDc8.ico",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 2,
+    "fields": {
+        "nombre": "Tenis",
+        "icon_image": "images/sport_icons/22985_ball_sport_sports_tennis_icon.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 3,
+    "fields": {
+        "nombre": "Esgrima",
+        "icon_image": "images/sport_icons/Esgrima.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 4,
+    "fields": {
+        "nombre": "Voley",
+        "icon_image": "",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 5,
+    "fields": {
+        "nombre": "F�tbol 11",
+        "icon_image": "images/sport_icons/8530683_futbol_icon.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 6,
+    "fields": {
+        "nombre": "F�tbol Sala",
+        "icon_image": "",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 7,
+    "fields": {
+        "nombre": "P�del",
+        "icon_image": "",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 8,
+    "fields": {
+        "nombre": "Waterpolo",
+        "icon_image": "images/sport_icons/9071323_waterpolo_icon.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 9,
+    "fields": {
+        "nombre": "Rugby",
+        "icon_image": "images/sport_icons/Rugby.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 10,
+    "fields": {
+        "nombre": "Hockey Hierba",
+        "icon_image": "",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 11,
+    "fields": {
+        "nombre": "Escalada",
+        "icon_image": "images/sport_icons/172583_climbing_icon.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 12,
+    "fields": {
+        "nombre": "Gimnasia Deportiva",
+        "icon_image": "images/sport_icons/GimDep.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.deporte",
+    "pk": 13,
+    "fields": {
+        "nombre": "Curling",
+        "icon_image": "images/sport_icons/Curling.png",
+        "icon_url": null
+    }
+},
+{
+    "model": "lugares.sexo",
+    "pk": 1,
+    "fields": {
+        "opcion": "Masculino"
+    }
+},
+{
+    "model": "lugares.sexo",
+    "pk": 2,
+    "fields": {
+        "opcion": "Femenino"
+    }
+},
+{
+    "model": "lugares.sexo",
+    "pk": 3,
+    "fields": {
+        "opcion": "Mixto"
+    }
+},
+{
+    "model": "lugares.sexo",
+    "pk": 4,
+    "fields": {
+        "opcion": "Otros"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 1,
+    "fields": {
+        "nombre": "Cumple 11 a�os durante el a�o de inicio [ALEV�N2�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 2,
+    "fields": {
+        "nombre": "Cumple 09 a�os durante el a�o de inicio [BENJAM�N 2�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 3,
+    "fields": {
+        "nombre": "Cumple 14 a�os durante el a�o de inicio [CADETE 1�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 4,
+    "fields": {
+        "nombre": "Cumple 13 a�os durante el a�o de inicio [INFANTIL 2�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 5,
+    "fields": {
+        "nombre": "Cumple 12 a�os durante el a�o de inicio [INFANTIL 1�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 6,
+    "fields": {
+        "nombre": "Cumple 15 a�os durante el a�o de inicio [CADETE 2�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 7,
+    "fields": {
+        "nombre": "Cumple 10 a�os durante el a�o de inicio [ALEV�N 1�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 8,
+    "fields": {
+        "nombre": "Cumple 16 a�os durante el a�o de inicio [JUNIOR/JUVENIL 1�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 9,
+    "fields": {
+        "nombre": "Cumple 17 a�os durante el a�o de inicio [JUNIOR/JUVENIL 2�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 10,
+    "fields": {
+        "nombre": "Cumple 08 a�os durante el a�o de inicio [BENJAM�N 1�]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 11,
+    "fields": {
+        "nombre": "Tiene 18 a�os � m�s [S�NIOR]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 12,
+    "fields": {
+        "nombre": "Tiene 30 a�os � m�s [O30]"
+    }
+},
+{
+    "model": "lugares.categoriaedad",
+    "pk": 13,
+    "fields": {
+        "nombre": "Tiene 35 a�os � m�s [OVER35]"
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 1,
+    "fields": {
+        "lugar": 1,
+        "deporte": 1,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            5,
+            4,
+            3,
+            6,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 2,
+    "fields": {
+        "lugar": 2,
+        "deporte": 1,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11,
+            13
+        ],
+        "sexos_permitidos": [
+            2
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 3,
+    "fields": {
+        "lugar": 1,
+        "deporte": 5,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 4,
+    "fields": {
+        "lugar": 3,
+        "deporte": 2,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 5,
+    "fields": {
+        "lugar": 4,
+        "deporte": 1,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 6,
+    "fields": {
+        "lugar": 1,
+        "deporte": 5,
+        "tipo_competicion": "OTRO",
+        "categorias_edad": [
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 7,
+    "fields": {
+        "lugar": 4,
+        "deporte": 1,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 8,
+    "fields": {
+        "lugar": 5,
+        "deporte": 8,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 9,
+    "fields": {
+        "lugar": 2,
+        "deporte": 1,
+        "tipo_competicion": "LOCAL",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9
+        ],
+        "sexos_permitidos": [
+            3
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 10,
+    "fields": {
+        "lugar": 6,
+        "deporte": 11,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 11,
+    "fields": {
+        "lugar": 7,
+        "deporte": 1,
+        "tipo_competicion": "AMBAS",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2,
+            1,
+            3
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 12,
+    "fields": {
+        "lugar": 8,
+        "deporte": 5,
+        "tipo_competicion": "AMBAS",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 13,
+    "fields": {
+        "lugar": 8,
+        "deporte": 1,
+        "tipo_competicion": "AMBAS",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 14,
+    "fields": {
+        "lugar": 9,
+        "deporte": 1,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 15,
+    "fields": {
+        "lugar": 10,
+        "deporte": 1,
+        "tipo_competicion": "AMBAS",
+        "categorias_edad": [
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2,
+            1,
+            3
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 16,
+    "fields": {
+        "lugar": 11,
+        "deporte": 3,
+        "tipo_competicion": "AMBAS",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 17,
+    "fields": {
+        "lugar": 12,
+        "deporte": 9,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 18,
+    "fields": {
+        "lugar": 12,
+        "deporte": 9,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            11
+        ],
+        "sexos_permitidos": [
+            2
+        ]
+    }
+},
+{
+    "model": "lugares.ofertadeportiva",
+    "pk": 19,
+    "fields": {
+        "lugar": 13,
+        "deporte": 9,
+        "tipo_competicion": "FEDERADA",
+        "categorias_edad": [
+            10,
+            2,
+            7,
+            1,
+            5,
+            4,
+            3,
+            6,
+            8,
+            9,
+            11
+        ],
+        "sexos_permitidos": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 1,
+    "fields": {
+        "nombre": "Campus Verano"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 2,
+    "fields": {
+        "nombre": "Campus Navidad"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 3,
+    "fields": {
+        "nombre": "Pruebas de acceso / Jornadas de captaci�n"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 4,
+    "fields": {
+        "nombre": "Presentaci�n oficial"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 5,
+    "fields": {
+        "nombre": "Venta de entradas"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 6,
+    "fields": {
+        "nombre": "Venta de abonos"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 7,
+    "fields": {
+        "nombre": "Tecnificaci�n"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 8,
+    "fields": {
+        "nombre": "Club"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 9,
+    "fields": {
+        "nombre": "Servicio de Perfeccionamiento"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 10,
+    "fields": {
+        "nombre": "Centro Deportivo"
+    }
+},
+{
+    "model": "lugares.tipoevento",
+    "pk": 11,
+    "fields": {
+        "nombre": "Gimnasio"
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 1,
+    "fields": {
+        "nombre": "Real Madrid C.F.",
+        "descripcion": "XXX",
+        "direccion": "Av. de Concha Espina, 1, Chamart�n, 28036 Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.453000",
+        "longitud": "-3.688300",
+        "telefono": null,
+        "web": "http://realmadrid.com",
+        "instagram_link": "https://www.instagram.com/realmadrid/",
+        "x_link": "https://x.com/realmadrid?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+        "email": "atencionpublico@corp.realmadrid.com",
+        "logo": "",
+        "logo_url": "https://images.seeklogo.com/logo-png/50/3/club-real-madrid-de-potrero-bajada-santiago-logo-png_seeklogo-504005.png",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 2,
+    "fields": {
+        "nombre": "Club Femenino Alcorc�n",
+        "descripcion": "El mejor Club de Baloncesto de Alcorc�n con equipo profesional.",
+        "direccion": "Av. del Alcalde Jos� Aranda, 39-47",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.341499",
+        "longitud": "-3.823798",
+        "telefono": null,
+        "web": "https://www.femeninoalcorcon.com/web/index.aspx",
+        "instagram_link": "https://www.instagram.com/femeninalcorcon/?hl=es",
+        "x_link": null,
+        "email": null,
+        "logo": "images/logos/LogoFA.png",
+        "logo_url": null,
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 3,
+    "fields": {
+        "nombre": "Club de tenis y p�del Coslada",
+        "descripcion": "",
+        "direccion": "Av. de la Ca�ada, 111, 28823 Coslada, Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.413200",
+        "longitud": "-3.538500",
+        "telefono": "669 01 18 44",
+        "web": "https://ctpcoslada.com/",
+        "instagram_link": "https://www.instagram.com/clubtenispadelcoslada",
+        "x_link": null,
+        "email": null,
+        "logo": "images/logos/Logo_TenisCoslada.png",
+        "logo_url": null,
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 4,
+    "fields": {
+        "nombre": "Club Baloncesto Talavera",
+        "descripcion": "XXX",
+        "direccion": "C. Nicaragua, 0, 45600 Talavera de la Reina, Toledo",
+        "comunidad_autonoma": 3,
+        "provincia": 2,
+        "latitud": "39.963400",
+        "longitud": "-4.828300",
+        "telefono": "+34 619 27 72 81",
+        "web": "https://www.baloncestotalavera.com/",
+        "instagram_link": "https://www.instagram.com/baloncesto_talavera/?hl=es",
+        "x_link": null,
+        "email": "media.btalavera@gmail.com",
+        "logo": "images/logos/logo_talavera.png",
+        "logo_url": null,
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 5,
+    "fields": {
+        "nombre": "Club Waterpolo Castellae",
+        "descripcion": "",
+        "direccion": "Parque Virgen del Manzano 4, 7� A, 09005 Burgos, Espa�a",
+        "comunidad_autonoma": 4,
+        "provincia": 3,
+        "latitud": "42.345319",
+        "longitud": "-3.693134",
+        "telefono": "661615987",
+        "web": "http://www.waterpolocastellae.com/",
+        "instagram_link": "https://www.instagram.com/p/o4C90GzNey/",
+        "x_link": null,
+        "email": null,
+        "logo": "images/logos/LogoWaterpoloCastellae.png",
+        "logo_url": null,
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 6,
+    "fields": {
+        "nombre": "Sputnik Alcobendas",
+        "descripcion": "",
+        "direccion": "C. de la Granja, 100, 28108 Alcobendas, Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.518293",
+        "longitud": "-3.640154",
+        "telefono": null,
+        "web": null,
+        "instagram_link": null,
+        "x_link": null,
+        "email": null,
+        "logo": "images/logos/LogoSputnik.png",
+        "logo_url": null,
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 7,
+    "fields": {
+        "nombre": "Basket Cervantes Ciudad Real",
+        "descripcion": "",
+        "direccion": "Pabell�n Municipal \"Puerta de Santa Mar�a\" Cam. Campillo 13005 Ciudad Real Espa�a",
+        "comunidad_autonoma": 3,
+        "provincia": 4,
+        "latitud": "38.986852",
+        "longitud": "-3.936418",
+        "telefono": "675 577 003 / 661 57",
+        "web": "https://www.basketcervantes.com/",
+        "instagram_link": null,
+        "x_link": null,
+        "email": "info@basketcervantes.com",
+        "logo": "",
+        "logo_url": "https://api.clupik.com/clubs/1247/images/navbar.png",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 8,
+    "fields": {
+        "nombre": "La Cultural y Deportiva Leonesa, S. A. D.",
+        "descripcion": "La Cultural Leonesa",
+        "direccion": "Paseo Sa�nz de Miera, s/n 24009. Le�n - Espa�a",
+        "comunidad_autonoma": 4,
+        "provincia": 5,
+        "latitud": "42.583358",
+        "longitud": "-5.573492",
+        "telefono": "987 25 37 69",
+        "web": "https://cydleonesa.com/",
+        "instagram_link": "https://www.instagram.com/cydleonesasad/",
+        "x_link": "https://www.instagram.com/cydleonesasad/",
+        "email": "cultural@cydleonesa.com",
+        "logo": "",
+        "logo_url": "https://cydleonesa.com/wp-content/uploads/elementor/thumbs/escudo-cydleonesa-qqt59lxqdd6n8563d5vk29yn0qpn5c6b2vy4y66lfk.png?1753636035",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 9,
+    "fields": {
+        "nombre": "Pintobasket",
+        "descripcion": "Club del sur de Madrid en crecimiento.",
+        "direccion": "C/ Asturias, s/n Pabell�n Sandra Aguilar 28320 Pinto, Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.249604",
+        "longitud": "-3.693444",
+        "telefono": "676 32 12 78",
+        "web": "https://www.pintobasket.com/es",
+        "instagram_link": "https://www.instagram.com/pintobasket_ecb/?hl=es",
+        "x_link": "https://x.com/pintobasket",
+        "email": "pintobasket@pintobasket.com",
+        "logo": "",
+        "logo_url": "https://api.clupik.com/clubs/224/images/navbar.png",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 10,
+    "fields": {
+        "nombre": "Oviedo Baloncesto",
+        "descripcion": "",
+        "direccion": "C. Palmira Villa Gonz�lez-R�o, s/n, 33001 Oviedo, Asturias, Espa�a",
+        "comunidad_autonoma": 5,
+        "provincia": 6,
+        "latitud": "43.370504",
+        "longitud": "-5.846954",
+        "telefono": "984 34 00 98",
+        "web": "https://oviedobaloncesto.com/web/",
+        "instagram_link": "https://www.instagram.com/oviedocb/",
+        "x_link": "https://www.instagram.com/oviedocb/",
+        "email": "info@oviedobaloncesto.com",
+        "logo": "",
+        "logo_url": "https://oviedobaloncesto.com/web/wp-content/uploads/2025/07/equipo-logo-44-scaled-e1752738960211.jpg",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 11,
+    "fields": {
+        "nombre": "Sala de Armas de Madrid",
+        "descripcion": "",
+        "direccion": "Estadio Vallehermoso, Av. de Filipinas, 7, Chamber�, 28003 Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.441016",
+        "longitud": "-3.708814",
+        "telefono": "917653308/638126984",
+        "web": "https://esgrimamadrid.com/",
+        "instagram_link": "https://www.instagram.com/sama.esgrima/",
+        "x_link": null,
+        "email": "sama@esgrimamadrid.com",
+        "logo": "",
+        "logo_url": "https://esgrimamadrid.com/wp-content/uploads/2018/07/cropped-75052_484978104873783_99632977_n-1.png",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 12,
+    "fields": {
+        "nombre": "Arquitectura Rugby",
+        "descripcion": "Campo de rugby Las Leonas del Ensanche",
+        "direccion": "C. Arte Hiperrealista, Vallecas, 28051 Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.358885",
+        "longitud": "-3.587660",
+        "telefono": null,
+        "web": "https://www.arquitectura-rugby.org/",
+        "instagram_link": "https://www.instagram.com/arquitecturarugby/?hl=es",
+        "x_link": "https://x.com/cdarquitectura?lang=es",
+        "email": null,
+        "logo": "",
+        "logo_url": "https://www.arquitectura-rugby.org/wp-content/uploads/2024/09/arquitectura-rugby-logo4.png",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+},
+{
+    "model": "lugares.lugar",
+    "pk": 13,
+    "fields": {
+        "nombre": "Atl�tico Rivas",
+        "descripcion": "El Club Atl�tico Rivas Rugby es el resultado de un sue�o compartido y de la uni�n de dos caminos que ten�an un mismo objetivo: acercar el rugby a Rivas y construir un club abierto, inclusivo y familiar.",
+        "direccion": "Polideportivo Cerro del Tel�grafo, 28522 Rivas-Vaciamadrid, Madrid",
+        "comunidad_autonoma": 1,
+        "provincia": 1,
+        "latitud": "40.358782",
+        "longitud": "-3.542660",
+        "telefono": "+34 722 61 72 22",
+        "web": "https://www.atleticorivas.com/",
+        "instagram_link": "https://www.instagram.com/atleticorivasrugby/",
+        "x_link": "https://x.com/atleticoRivas",
+        "email": null,
+        "logo": "",
+        "logo_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9-LlJ5ATK1tGAaIOr3wARng-swz_EBIGufg&s",
+        "tipo": "otro",
+        "accesible": false,
+        "servicios": []
+    }
+}
+]

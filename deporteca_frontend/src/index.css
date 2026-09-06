@@ -1,0 +1,201 @@
+/* src/index.css */
+/*
+  The following @tailwind directives require Tailwind CSS to be processed via PostCSS.
+  Make sure your build tool (e.g., webpack, Vite, or CRA) is configured to use Tailwind.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: 'Exo', sans-serif;
+  margin: 0;
+  background: rgba(57, 129, 59, 0.353) !important;
+  color: #222e3a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Estilos para el mapa */
+#map-container {
+  height: 500px; /* Asegúrate de que el contenedor del mapa tenga una altura definida */
+  width: 100%;
+  border-radius: 0.75rem; /* rounded-xl de Tailwind */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl de Tailwind */
+  overflow: hidden;
+}
+
+/* Asegúrate de que los popups de Leaflet sean legibles */
+.leaflet-popup-content-wrapper {
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+}
+
+.leaflet-popup-content {
+  font-family: 'Exo', sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Estilos para los modales */
+.fixed.inset-0 {
+    z-index: 50; /* Tailwind z-50 */
+}
+
+
+.bg-black.bg-opacity-50 {
+    background-color: rgba(93, 93, 93, 0.692);
+}
+
+
+.flex.items-center.justify-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.max-w-lg {
+    max-width: 32rem; /* 512px */
+}
+
+.max-w-2xl {
+    max-width: 42rem; /* 672px */
+}
+
+.w-full {
+    width: 100%;
+}
+
+.relative {
+    position: relative;
+}
+
+.max-h-\[90vh\] {
+    max-height: 90vh;
+}
+
+.max-h-\[95vh\] {
+    max-height: 95vh;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.pr-2 {
+    padding-right: 0.5rem;
+}
+
+/* Asegura que los modales estén por encima del mapa de Leaflet */
+.leaflet-container {
+    z-index: 0 !important;
+}
+
+/* El modal debe tener un z-index alto (ya lo tiene inline, pero refuerza aquí por si acaso) */
+.fixed, .modal, .ReactModal__Overlay {
+    z-index: 1000 !important;
+}
+
+/* Títulos principales */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Exo', sans-serif;
+  color: rgb(41, 33, 77);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Botones principales */
+.bg-green-600, .btn-primary {
+  background-color: #00e676 !important;
+  color: #fff !important;
+  border: none;
+}
+
+.bg-green-700, .btn-primary:hover {
+  background-color: #00b248 !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-100 {
+  background-color: #e8e8e8 !important;
+}
+
+.bg-gray-200 {
+  background-color: rgb(255, 255, 255);
+}
+
+.bg-gray-300, .btn-gray {
+  background-color: #e0e0e0 !important;
+  color: #222e3a !important;
+  border: none;
+}
+
+.bg-gray-400, .btn-gray:hover {
+  background-color: #bdbdbd !important;
+  color: #222e3a !important;
+}
+
+.text-green-900 {
+  color: #00b248 !important;
+}
+
+.text-green-800 {
+  color: #00e676 !important;
+}
+
+.text-gray-900 {
+  color: #222e3a !important;
+}
+
+.text-gray-700 {
+  color: #374151 !important;
+}
+
+.text-gray-600 {
+  color: #6b7280 !important;
+}
+
+/* Bordes y sombras para tarjetas y modales */
+.rounded-xl, .rounded-3xl {
+  border-radius: 1rem;
+}
+
+.shadow-xl, .shadow-lg {
+  box-shadow: 0 10px 30px -10px rgba(0, 255, 13, 0.1), 0 2px 4px -1px rgba(34, 46, 58, 0.06);
+}

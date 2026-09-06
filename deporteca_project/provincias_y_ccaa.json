@@ -1,0 +1,352 @@
+[
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 1,
+    "fields": { "nombre": "Andalucía" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 2,
+    "fields": { "nombre": "Aragón" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 3,
+    "fields": { "nombre": "Asturias" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 4,
+    "fields": { "nombre": "Baleares" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 5,
+    "fields": { "nombre": "Canarias" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 6,
+    "fields": { "nombre": "Cantabria" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 7,
+    "fields": { "nombre": "Castilla y León" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 8,
+    "fields": { "nombre": "Castilla-La Mancha" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 9,
+    "fields": { "nombre": "Cataluña" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 10,
+    "fields": { "nombre": "Comunidad Valenciana" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 11,
+    "fields": { "nombre": "Extremadura" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 12,
+    "fields": { "nombre": "Galicia" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 13,
+    "fields": { "nombre": "Comunidad de Madrid" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 14,
+    "fields": { "nombre": "Región de Murcia" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 15,
+    "fields": { "nombre": "Comunidad Foral de Navarra" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 16,
+    "fields": { "nombre": "País Vasco" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 17,
+    "fields": { "nombre": "La Rioja" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 18,
+    "fields": { "nombre": "Ceuta" }
+  },
+  {
+    "model": "lugares.comunidadautonoma",
+    "pk": 19,
+    "fields": { "nombre": "Melilla" }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 1,
+    "fields": { "nombre": "Araba/Álava", "comunidad_autonoma": 16 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 2,
+    "fields": { "nombre": "Albacete", "comunidad_autonoma": 8 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 3,
+    "fields": { "nombre": "Alicante/Alacant", "comunidad_autonoma": 10 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 4,
+    "fields": { "nombre": "Almería", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 5,
+    "fields": { "nombre": "Ávila", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 6,
+    "fields": { "nombre": "Badajoz", "comunidad_autonoma": 11 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 7,
+    "fields": { "nombre": "Illes Balears", "comunidad_autonoma": 4 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 8,
+    "fields": { "nombre": "Barcelona", "comunidad_autonoma": 9 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 9,
+    "fields": { "nombre": "Bizkaia", "comunidad_autonoma": 16 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 10,
+    "fields": { "nombre": "Burgos", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 11,
+    "fields": { "nombre": "Cáceres", "comunidad_autonoma": 11 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 12,
+    "fields": { "nombre": "Cádiz", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 13,
+    "fields": { "nombre": "Castellón/Castelló", "comunidad_autonoma": 10 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 14,
+    "fields": { "nombre": "Ciudad Real", "comunidad_autonoma": 8 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 15,
+    "fields": { "nombre": "Córdoba", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 16,
+    "fields": { "nombre": "A Coruña", "comunidad_autonoma": 12 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 17,
+    "fields": { "nombre": "Cuenca", "comunidad_autonoma": 8 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 18,
+    "fields": { "nombre": "Gipuzkoa", "comunidad_autonoma": 16 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 19,
+    "fields": { "nombre": "Girona", "comunidad_autonoma": 9 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 20,
+    "fields": { "nombre": "Granada", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 21,
+    "fields": { "nombre": "Guadalajara", "comunidad_autonoma": 8 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 22,
+    "fields": { "nombre": "Huelva", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 23,
+    "fields": { "nombre": "Huesca", "comunidad_autonoma": 2 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 24,
+    "fields": { "nombre": "Jaén", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 25,
+    "fields": { "nombre": "León", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 26,
+    "fields": { "nombre": "Lleida", "comunidad_autonoma": 9 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 27,
+    "fields": { "nombre": "Lugo", "comunidad_autonoma": 12 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 28,
+    "fields": { "nombre": "Madrid", "comunidad_autonoma": 13 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 29,
+    "fields": { "nombre": "Málaga", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 30,
+    "fields": { "nombre": "Murcia", "comunidad_autonoma": 14 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 31,
+    "fields": { "nombre": "Navarra", "comunidad_autonoma": 15 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 32,
+    "fields": { "nombre": "Ourense", "comunidad_autonoma": 12 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 33,
+    "fields": { "nombre": "Palencia", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 34,
+    "fields": { "nombre": "Las Palmas", "comunidad_autonoma": 5 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 35,
+    "fields": { "nombre": "Pontevedra", "comunidad_autonoma": 12 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 36,
+    "fields": { "nombre": "La Rioja", "comunidad_autonoma": 17 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 37,
+    "fields": { "nombre": "Salamanca", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 38,
+    "fields": { "nombre": "Santa Cruz de Tenerife", "comunidad_autonoma": 5 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 39,
+    "fields": { "nombre": "Cantabria", "comunidad_autonoma": 6 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 40,
+    "fields": { "nombre": "Segovia", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 41,
+    "fields": { "nombre": "Sevilla", "comunidad_autonoma": 1 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 42,
+    "fields": { "nombre": "Soria", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 43,
+    "fields": { "nombre": "Tarragona", "comunidad_autonoma": 9 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 44,
+    "fields": { "nombre": "Teruel", "comunidad_autonoma": 2 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 45,
+    "fields": { "nombre": "Toledo", "comunidad_autonoma": 8 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 46,
+    "fields": { "nombre": "Valencia/València", "comunidad_autonoma": 10 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 47,
+    "fields": { "nombre": "Valladolid", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 48,
+    "fields": { "nombre": "Zamora", "comunidad_autonoma": 7 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 49,
+    "fields": { "nombre": "Zaragoza", "comunidad_autonoma": 2 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 50,
+    "fields": { "nombre": "Ceuta", "comunidad_autonoma": 18 }
+  },
+  {
+    "model": "lugares.provincia",
+    "pk": 51,
+    "fields": { "nombre": "Melilla", "comunidad_autonoma": 19 }
+  }
+]

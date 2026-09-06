@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+  <div id="content-main">
+    {% if pending_contact_requests_count and pending_contact_requests_count > 0 %}
+      <div style="margin-bottom: 16px; border: 1px solid #f59e0b; background: #fffbeb; padding: 12px 14px; border-radius: 8px;">
+        <strong style="color: #92400e;">Solicitudes pendientes:</strong>
+        <span style="color: #78350f;">{{ pending_contact_requests_count }}</span>
+        <a
+          href="{% url 'admin:lugares_contactopendiente_changelist' %}"
+          style="margin-left: 8px; color: #1d4ed8; text-decoration: underline;"
+        >
+          Revisar ahora
+        </a>
+      </div>
+    {% else %}
+      <div style="margin-bottom: 16px; border: 1px solid #10b981; background: #ecfdf5; padding: 12px 14px; border-radius: 8px;">
+        <strong style="color: #065f46;">Solicitudes pendientes:</strong>
+        <span style="color: #065f46;">0</span>
+      </div>
+    {% endif %}
+
+    {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+  </div>
+{% endblock %}
