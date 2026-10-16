@@ -53,7 +53,7 @@ function PlaceAutocomplete({ value = '', onChange, placeholder = 'Dirección (so
   return (
     <div>
       <GooglePlacesAutocomplete
-        apiKey="REDACTED"
+        apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
         selectProps={{
           value: inputValue ? { label: inputValue, value: inputValue } : null,
           onChange: handleSelect,

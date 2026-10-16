@@ -13,20 +13,37 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Carga variables desde deporteca_project/.env (ver .env.example). Las variables
+# de entorno reales tienen prioridad sobre el archivo.
+load_dotenv(Path(__file__).resolve().parent / '.env')
+
+
+def env_list(name, default=''):
+    return [item.strip() for item in os.getenv(name, default).split(',') if item.strip()]
+
+
+def env_bool(name, default='false'):
+    return os.getenv(name, default).lower() in ('1', 'true', 'yes')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'REDACTED'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    raise ImproperlyConfigured('Falta DJANGO_SECRET_KEY (ver deporteca_project/.env.example).')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env_list('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
 
 # Application definition
@@ -84,11 +101,11 @@ WSGI_APPLICATION = 'wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deporteca',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB', 'deporteca'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -143,10 +160,8 @@ REST_FRAMEWORK = {
 }
 
 # Configuración de CORS
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", # Permite explícitamente que tu frontend de React se conecte
-    # Si en el futuro tu frontend se aloja en otro dominio/puerto, lo añadirías aquí
-]
+# Orígenes del frontend permitidos, separados por comas (DJANGO_CORS_ALLOWED_ORIGINS)
+CORS_ALLOWED_ORIGINS = env_list('DJANGO_CORS_ALLOWED_ORIGINS', 'http://localhost:3000')
 
 # Estas son configuraciones recomendadas para desarrollo:
 CORS_ALLOW_ALL_ORIGINS = False # Es mejor ser específico con CORS_ALLOWED_ORIGINS para seguridad
@@ -182,10 +197,6 @@ EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '25'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'false').lower() in ('1', 'true', 'yes')
-EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'false').lower() in ('1', 'true', 'yes')
-ENTITY_REQUEST_NOTIFICATION_EMAILS = [
-    email.strip()
-    for email in os.getenv('ENTITY_REQUEST_NOTIFICATION_EMAILS', '').split(',')
-    if email.strip()
-]
+EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS')
+EMAIL_USE_SSL = env_bool('EMAIL_USE_SSL')
+ENTITY_REQUEST_NOTIFICATION_EMAILS = env_list('ENTITY_REQUEST_NOTIFICATION_EMAILS')
