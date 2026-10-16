@@ -36,6 +36,10 @@ Ver la tabla en [Arquitectura](arquitectura.md#dos-backends-django-y-firestore).
 
 **Decisión pendiente:** quedarse solo con Django (recomendado: ya contiene toda la lógica de negocio) y usar Firebase como mucho para auth y Storage, o al revés.
 
+### La app no carga si Firestore falla
+
+Al arrancar, `App.js` espera al login anónimo de Firebase **y** a la primera lectura de `lugares` en Firestore antes de mostrar nada, aunque la búsqueda y el mapa usan datos de Django. Si Firebase falla (dominio no autorizado, reglas, sin conexión), toda la página muestra un error.
+
 ### `App.js` demasiado grande
 
 Más de 1000 líneas con casi todo el estado y la lógica. La URL del backend se define en tres archivos (`App.js`, `LugarForm.jsx`, `EntityRegistrationModal.jsx`).
@@ -46,6 +50,8 @@ Más de 1000 líneas con casi todo el estado y la lógica. La URL del backend se
 - **Migración pendiente.** `makemigrations --check` detecta una migración sin crear para los modelos proxy (`ContactoPendiente`, `Lugar*`). No cambia tablas.
 - **`lugares_django.json` no se puede cargar.** Tiene BOM de Windows al principio y usa un esquema antiguo (`tipo_competicion` como texto en vez de clave foránea).
 - **`seed_demo_lugares` choca con `provincias_y_ccaa.json`.** Escribe "Cataluna" sin eñe y crea una provincia "Barcelona" duplicada.
+- **El mapa muestra "API KEY REQUIRED".** `MapComponent.js` usa las teselas gratuitas de CARTO (`basemaps.cartocdn.com`) sin clave, y CARTO ahora devuelve una imagen de aviso a quien no tiene clave. Pasa también con el código original. Opciones: clave gratuita de CARTO, otro proveedor con clave (MapTiler, Stadia) o las teselas de OpenStreetMap para desarrollo. Lo ideal es que la URL de las teselas venga de una variable de entorno.
+- **El mensaje de error de búsqueda tiene la URL escrita a mano.** "No se ha podido conectar con el backend de búsqueda" siempre dice `http://127.0.0.1:8000`, aunque `REACT_APP_BACKEND_API_BASE` sea otra.
 - **Nominatim** se usa para autocompletado y geocodificación. Su política de uso no permite autocompletado ni uso intensivo; en producción hace falta otro proveedor o una instancia propia.
 - **Errores internos expuestos.** Varios `except Exception` devuelven el texto del error al cliente.
 - **Sin tests.** `lugares/tests.py` está vacío.
