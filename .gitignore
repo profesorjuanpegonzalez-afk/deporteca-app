@@ -1,8 +1,29 @@
-.venv
-node_modules
-build
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
 *.sqlite3
-media
-*firebase-adminsdk*.json
+staticfiles/
+media/
+.ruff_cache/
+
+# Node
+node_modules/
+build/
+
+# Secretos y configuración local
 .env*
+!.env.example
+*firebase-adminsdk*.json
+
+# Documentos de trabajo / archivos temporales de Office
+*.docx
 ~$*
+backup*.txt
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

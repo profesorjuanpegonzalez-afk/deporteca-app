@@ -16,13 +16,14 @@ const appId = 'deporteca';
 const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 const backendApiBase = process.env.REACT_APP_BACKEND_API_BASE || 'http://127.0.0.1:8000';
 
+// Configuración de Firebase desde variables de entorno (ver .env.example)
 const firebaseConfig = {
-    apiKey: "REDACTED",
-    authDomain: "deporteca.firebaseapp.com",
-    projectId: "deporteca",
-    storageBucket: "deporteca.firebasestorage.app",
-    messagingSenderId: "809192847817",
-    appId: "1:809192847817:web:0562c8ac36cd7821edd018"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 const toIdString = (value) => {
