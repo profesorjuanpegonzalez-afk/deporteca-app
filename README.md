@@ -9,7 +9,8 @@ Buscador de servicios deportivos (clubes, gimnasios, piscinas, centros deportivo
 
 - Python 3.12+
 - Node.js 18+
-- PostgreSQL con una base de datos `deporteca`
+- PostgreSQL con una base de datos `deporteca`. Con Docker:
+  `docker run -d --name deporteca-pg -e POSTGRES_DB=deporteca -e POSTGRES_PASSWORD=<contraseña> -p 127.0.0.1:5432:5432 postgres:15`
 
 ## Backend
 
@@ -35,6 +36,8 @@ npm start
 ```
 
 La app queda en `http://localhost:3000`.
+
+Para volver a arrancarlo otro día, pasar desde la versión anterior (configuración en el código) o abrir la app desde otra máquina, ver `docs/es/puesta-en-marcha.md`.
 
 ## Configuración
 
