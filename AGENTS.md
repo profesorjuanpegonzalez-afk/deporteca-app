@@ -56,6 +56,23 @@ zensical build && zensical build -f zensical.en.toml
 
 Run the checks for every part you touched before saying a change is done.
 
+## Running the app locally
+
+Full guide: `docs/es/puesta-en-marcha.md`. Short version, in this order:
+
+1. **Database:** `docker start deporteca-pg` (Docker) or make sure the local PostgreSQL service is running.
+2. **Backend:** activate `.venv`, `python manage.py migrate`, `python manage.py runserver` → `http://127.0.0.1:8000/api/` (the root `/` is a normal 404).
+3. **Frontend:** `npm start` → `http://localhost:3000`.
+
+Things that have caused confusion before:
+
+- Both `.env` files must exist (copy from `.env.example`). Without `DJANGO_SECRET_KEY` Django refuses to start.
+- The frontend reads `.env` **only at startup**: restart `npm start` after changing it.
+- The page only loads if Firebase anonymous login works, and Firebase only accepts authorised domains (`localhost` by default). To use the app from another machine, use an SSH tunnel for ports 3000 **and** 8000 and open `localhost:3000`; don't add hosts to Firebase without asking the owner.
+- `REACT_APP_BACKEND_API_BASE` is the API URL as seen from the **browser**, and that origin must be in `DJANGO_CORS_ALLOWED_ORIGINS`.
+- The search error message always says `127.0.0.1:8000`, whatever the real URL is.
+- Map tiles show "API KEY REQUIRED": CARTO now needs a key. This is a known issue, not a local setup problem.
+
 ## Hard rules
 
 ### Secrets and configuration
@@ -91,6 +108,7 @@ Run the checks for every part you touched before saying a change is done.
 - New page → add it to `nav` in both `docs/zensical.toml` and `docs/zensical.en.toml`.
 - When you fix something listed in `docs/es/problemas-conocidos.md`, remove it there (and in EN) in the same change.
 - Update the relevant docs page whenever you change behaviour, the API, models or configuration.
+- Any change to setup, dependencies, env vars or how the app is started must update `docs/es/puesta-en-marcha.md` (+ EN), including the "Volver a arrancar el entorno" and "Si algo falla" sections, and the short version in [Running the app locally](#running-the-app-locally).
 
 ### Git
 
