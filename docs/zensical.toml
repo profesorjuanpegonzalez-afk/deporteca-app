@@ -1,0 +1,38 @@
+# Documentación en español: FUENTE DE VERDAD.
+# La versión inglesa (zensical.en.toml + en/) es un espejo de esta; ver es/documentacion.md.
+site_name = "Deporteca"
+site_description = "Documentación técnica de Deporteca"
+docs_dir = "es"
+site_dir = "site"
+
+nav = [
+  {"Inicio" = "index.md"},
+  {"Arquitectura" = "arquitectura.md"},
+  {"Modelo de datos" = "modelo-de-datos.md"},
+  {"Ciclo de vida de una entidad" = "ciclo-de-vida-entidad.md"},
+  {"API" = "api.md"},
+  {"Puesta en marcha" = "puesta-en-marcha.md"},
+  {"Problemas conocidos" = "problemas-conocidos.md"},
+  {"Sobre esta documentación" = "documentacion.md"}
+]
+
+extra_css = [
+  "stylesheets/theme-toggle.css"
+]
+
+extra_javascript = [
+  "javascripts/theme-toggle.js"
+]
+
+[theme]
+language = "es"
+palette = [
+  {scheme = "slate", primary = "black", accent = "blue"},
+  {scheme = "default", primary = "black", accent = "blue"}
+]
+
+[extra]
+alternate = [
+  {name = "Español", link = "./", lang = "es"},
+  {name = "English", link = "en/", lang = "en"}
+]

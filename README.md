@@ -39,3 +39,9 @@ La app queda en `http://localhost:3000`.
 ## Configuración
 
 Toda la configuración sensible (claves, contraseñas, hosts) se lee de variables de entorno. Cada carpeta tiene un `.env.example` con la lista completa. Los archivos `.env` están en `.gitignore` y **nunca** deben subirse al repositorio.
+
+## Documentación
+
+La documentación técnica está en `docs/` (español en `docs/es/`, fuente de verdad; inglés en `docs/en/`). Para compilarla y verla en local, ver `docs/es/documentacion.md`.
+
+Las reglas para asistentes de IA (GitHub Copilot, etc.) están en [`AGENTS.md`](AGENTS.md).

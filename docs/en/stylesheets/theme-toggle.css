@@ -1,0 +1,89 @@
+:root {
+  --toggle-duration: 0.3s;
+}
+
+/* Dark theme (default) */
+html[data-theme="dark"],
+html {
+  background-color: #0d1117;
+  color: #e6edf3;
+}
+
+html[data-theme="dark"] body {
+  background-color: #0d1117;
+  color: #e6edf3;
+}
+
+/* Light theme */
+html[data-theme="light"] {
+  background-color: #ffffff;
+  color: #1f2328;
+}
+
+html[data-theme="light"] body {
+  background-color: #ffffff;
+  color: #1f2328;
+}
+
+/* Theme toggle button — fixed top-right */
+.theme-toggle {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 10000 !important;
+  background-color: #58a6ff !important;
+  color: #0d1117 !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 48px !important;
+  height: 48px !important;
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all var(--toggle-duration) ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  padding: 0 !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  min-width: unset !important;
+  min-height: unset !important;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+.theme-toggle:active {
+  transform: scale(0.9);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid rgba(88, 166, 255, 0.5);
+  outline-offset: 2px;
+}
+
+html {
+  transition: background-color var(--toggle-duration) ease,
+              color var(--toggle-duration) ease;
+}
+
+/* Hide Zensical attribution */
+[class*="powered-by"],
+[class*="made-with"],
+[class*="built-with"],
+.md-footer__inner a[href*="zensical"],
+.md-footer__inner a[href*="material"],
+a[title*="zensical" i],
+a[title*="made with" i],
+footer a[href*="zensical"],
+footer span:has(> a[href*="zensical"]),
+[class*="footer"] a[href*="zensical"],
+[class*="footer"] a[href*="material"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

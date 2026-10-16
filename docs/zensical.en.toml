@@ -1,0 +1,38 @@
+# English documentation: MIRROR of zensical.toml + es/ (Spanish is the source of truth).
+# Update es/ first, then mirror the change in en/; see es/documentacion.md.
+site_name = "Deporteca"
+site_description = "Deporteca technical documentation"
+docs_dir = "en"
+site_dir = "site/en"
+
+nav = [
+  {"Home" = "index.md"},
+  {"Architecture" = "arquitectura.md"},
+  {"Data model" = "modelo-de-datos.md"},
+  {"Entity lifecycle" = "ciclo-de-vida-entidad.md"},
+  {"API" = "api.md"},
+  {"Getting started" = "puesta-en-marcha.md"},
+  {"Known issues" = "problemas-conocidos.md"},
+  {"About these docs" = "documentacion.md"}
+]
+
+extra_css = [
+  "stylesheets/theme-toggle.css"
+]
+
+extra_javascript = [
+  "javascripts/theme-toggle.js"
+]
+
+[theme]
+language = "en"
+palette = [
+  {scheme = "slate", primary = "black", accent = "blue"},
+  {scheme = "default", primary = "black", accent = "blue"}
+]
+
+[extra]
+alternate = [
+  {name = "Español", link = "../", lang = "es"},
+  {name = "English", link = "./", lang = "en"}
+]
