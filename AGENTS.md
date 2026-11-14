@@ -90,7 +90,6 @@ Things that have caused confusion before:
 - The page only loads if Firebase anonymous login works, and Firebase only accepts authorised domains (`localhost` by default). To use the app from another machine, use an SSH tunnel for ports 3000 **and** 8000 and open `localhost:3000`; don't add hosts to Firebase without asking the owner.
 - `REACT_APP_BACKEND_API_BASE` is the API URL as seen from the **browser**, and that origin must be in `DJANGO_CORS_ALLOWED_ORIGINS`.
 - The search error message always says `127.0.0.1:8000`, whatever the real URL is.
-- Map tiles show "API KEY REQUIRED": CARTO now needs a key. This is a known issue, not a local setup problem.
 
 ## Hard rules
 

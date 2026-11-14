@@ -182,6 +182,7 @@ Each folder has a `.env.example` listing every variable. `.env` files are in `.g
 | `REACT_APP_BACKEND_API_BASE` | Backend URL **as seen from the browser**. Defaults to `http://127.0.0.1:8000` |
 | `REACT_APP_FIREBASE_API_KEY`, `…_AUTH_DOMAIN`, `…_PROJECT_ID`, `…_STORAGE_BUCKET`, `…_MESSAGING_SENDER_ID`, `…_APP_ID` | Firebase project configuration |
 | `REACT_APP_GOOGLE_MAPS_API_KEY` | Google Places key for address autocomplete |
+| `REACT_APP_MAP_TILE_URL`, `REACT_APP_MAP_TILE_ATTRIBUTION` | Optional. Map tile URL and its attribution. Empty = OpenStreetMap |
 
 !!! warning "`REACT_APP_*` variables are public"
     Create React App embeds them in the JavaScript the browser downloads. Don't put secrets there. Protect the Google and Firebase keys with **HTTP-referrer and API restrictions** in Google Cloud Console.
@@ -209,6 +210,5 @@ On Windows, `deporteca_project/scripts/verify.ps1` runs the backend checks.
 | 404 at `http://127.0.0.1:8000/` | Normal: use `/api/` or `/admin/` |
 | "Error de autenticación" on the site | The domain you open the app with isn't authorised in Firebase (see [Opening the app from another machine](#opening-the-app-from-another-machine)) |
 | "No se ha podido conectar con el backend de búsqueda" | The browser can't reach `REACT_APP_BACKEND_API_BASE`: backend stopped, port 8000 not tunnelled, or CORS. The message always says `127.0.0.1:8000`, even when the real URL is different |
-| The map shows "API KEY REQUIRED" | CARTO tiles now need a key (see [Known issues](problemas-conocidos.md)) |
 | The search returns nothing | No publishable venues: approved, with a CIF and an active subscription |
 | I changed the frontend `.env` and nothing happens | Restart `npm start` |

@@ -13,6 +13,12 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
 
+// Teselas del mapa: OpenStreetMap por defecto. Para usar otro proveedor
+// (por ejemplo, con clave en producción) define las variables en .env.
+const MAP_TILE_URL = process.env.REACT_APP_MAP_TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+const MAP_TILE_ATTRIBUTION = process.env.REACT_APP_MAP_TILE_ATTRIBUTION
+    || '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
 function MapComponent({ lugares, openPlaceDetail, selectedPlace }) {
     // DEBUG: Mostrar lugares y coordenadas en consola
     console.log('Lugares recibidos en el mapa:', lugares.map(l => ({ nombre: l.nombre, latitud: l.latitud, longitud: l.longitud })));
@@ -40,9 +46,8 @@ function MapComponent({ lugares, openPlaceDetail, selectedPlace }) {
 
         if (!mapRef.current) {
             mapRef.current = L.map('map-container').setView([40.416775, -3.703790], 6);
-            tileLayerRef.current = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                subdomains: 'abcd',
+            tileLayerRef.current = L.tileLayer(MAP_TILE_URL, {
+                attribution: MAP_TILE_ATTRIBUTION,
                 maxZoom: 19
             }).addTo(mapRef.current);
         }
