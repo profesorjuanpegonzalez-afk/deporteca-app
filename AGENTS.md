@@ -8,6 +8,25 @@ Instructions for AI coding agents (GitHub Copilot and others) working in this re
 - Code comments, UI text, docs and commit messages follow the language rules below, not the chat language.
 - Before a non-trivial change (several files, new dependency, model change, anything touching auth or data), explain the plan and wait for confirmation.
 - Never claim something works without running the relevant check (see [Commands](#commands)).
+- The person you're helping may not be a developer (the owner often isn't). Explain each git and terminal step in plain words before running it, and say what it does.
+
+## Planning and workflow
+
+Human-readable version: [`CONTRIBUTING.md`](CONTRIBUTING.md). Follow it; the rules below are the agent's checklist.
+
+- **The plan lives in GitHub issues and milestones**, not in chat or loose documents. Milestones are the pilot phases with due dates (Fase 1 → Fase 4, pilot on 2027-01-15; "Después del piloto" comes after). Read the issue before changing code.
+- **No issue, no work.** If the request doesn't match an open issue, say so and offer to draft one (Spanish, sections `## Objetivo`, `## Hecho cuando` checklist, `## Notas`). If it belongs to a later milestone than the current one, say so and ask before starting.
+- **Issues state technical defaults** (Django only, Django accounts, approved = visible, paid = verified, registration creates an inactive place). Follow them; don't reopen them. Only the owner can overrule one.
+- **Stick to the issue's "Hecho cuando" list.** Don't fix unrelated things in the same change; propose a new issue instead.
+- **Ownership:** only work on issues assigned to the person you're helping. Issues labelled `seguridad` or `backend`, and any change to models, migrations, permissions, auth, `settings.py` or dependencies, are maintainer territory: if the owner asks for one, explain that and suggest asking the maintainer in the issue instead.
+- **One issue → one branch → one pull request:**
+    1. Start from an up-to-date `main` (`git checkout main && git pull`).
+    2. Branch `type/number-short-description`, e.g. `feat/59-como-llegar`.
+    3. Make the change, run the checks for every part touched (see [Commands](#commands)).
+    4. Commit with a type prefix (see [Git](#git)), push the branch.
+    5. Open a PR using `.github/pull_request_template.md`: what changes, how to test, checks run, and `Closes #N`.
+    6. Never merge your own PR; the other person reviews. Address review comments on the same branch.
+- Example of a complete PR: #61.
 
 ## Project overview
 
@@ -25,7 +44,7 @@ Key concepts (details in `docs/es/ciclo-de-vida-entidad.md`):
 - `Lugar` is a venue. It only appears in public search when `puede_publicar_contenido` is true: approved + CIF + active subscription + no documentation required.
 - `OfertaDeportiva` = sport × sex × age category × competition type × service type, per venue.
 - `Contacto` is an organisation sign-up request, converted into a `Lugar` from the Django admin.
-- **Django is the de facto source of truth.** Firestore is still used in parts of the frontend (see `docs/es/arquitectura.md`). The final Django-vs-Firestore decision is still open.
+- **Django is the de facto source of truth.** Firestore is still used in parts of the frontend (see `docs/es/arquitectura.md`). Django is the only backend going forward (#12); the Firestore paths are being removed (#13–#15).
 
 ## Commands
 
@@ -93,7 +112,7 @@ Things that have caused confusion before:
 ### Frontend
 
 - The backend URL comes from `process.env.REACT_APP_BACKEND_API_BASE`. Don't hardcode `http://127.0.0.1:8000` in new code.
-- **Don't add new Firestore reads or writes** while the backend decision is open. New features go through the Django API.
+- **Don't add new Firestore reads or writes.** New features go through the Django API (#12).
 - Admin-only UI is not a security boundary. Anything sensitive must be enforced by the backend.
 - `npm run build` must pass with `CI=true` (CI treats ESLint warnings as errors).
 
@@ -113,7 +132,7 @@ Things that have caused confusion before:
 ### Git
 
 - Small, focused commits with a prefix: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`, `ci:`. The message explains **why**, not only what.
-- Work on a branch and open a pull request. Don't push directly to `main` and never force-push `main`.
+- Work on a branch and open a pull request (see [Planning and workflow](#planning-and-workflow)). Don't push directly to `main` and never force-push `main`.
 - Never commit generated or local files (see the secrets section).
 
 ## Skills (planned)
