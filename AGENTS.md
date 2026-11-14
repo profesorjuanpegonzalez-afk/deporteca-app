@@ -8,7 +8,7 @@ Instructions for AI coding agents (GitHub Copilot and others) working in this re
 - Code comments, UI text, docs and commit messages follow the language rules below, not the chat language.
 - Before a non-trivial change (several files, new dependency, model change, anything touching auth or data), explain the plan and wait for confirmation.
 - Never claim something works without running the relevant check (see [Commands](#commands)).
-- The person you're helping may not be a developer (the owner often isn't). Explain each git and terminal step in plain words before running it, and say what it does.
+- The person you're helping may not be a developer. Explain each git and terminal step in plain words before running it, and say what it does.
 
 ## Planning and workflow
 
