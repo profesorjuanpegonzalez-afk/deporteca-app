@@ -13,7 +13,7 @@ flowchart LR
     BE -. "geocoding" .-> NOM[Nominatim / OpenStreetMap]
     FE -. "anonymous login, roles,<br/>logos, suggestions" .-> FB[Firebase<br/>Auth · Firestore · Storage]
     FE -. "address autocomplete" .-> GP[Google Places]
-    FE -. "map tiles" .-> MAP[CARTO / OpenStreetMap]
+    FE -. "map tiles" .-> MAP[OpenStreetMap]
     ADM[Administrators] --> DA[Django admin<br/>/admin/]
     DA --> DB
 ```
@@ -77,5 +77,5 @@ The project started as a Firebase app and later moved to Django. Today both coex
 | Nominatim (OpenStreetMap) | Geocoding addresses to coordinates | Backend (`Lugar.save()`, `/api/address-suggestions/search/`) and frontend (search from the landing page) |
 | Google Places | Address autocomplete | Frontend (`PlaceAutocomplete.jsx`) |
 | Firebase | Anonymous auth, Firestore, Storage | Frontend (`App.js`) |
-| CARTO / OpenStreetMap | Map tiles | Frontend (`MapComponent.js`) |
+| OpenStreetMap (configurable) | Map tiles | Frontend (`MapComponent.js`) |
 | SMTP | Email notice for new organisation requests | Backend (`lugares/signals.py`) |

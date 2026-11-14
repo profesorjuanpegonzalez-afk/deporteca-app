@@ -10,7 +10,7 @@ flowchart LR
     BE -. "geocodificación" .-> NOM[Nominatim / OpenStreetMap]
     FE -. "login anónimo, roles,<br/>logos, sugerencias" .-> FB[Firebase<br/>Auth · Firestore · Storage]
     FE -. "autocompletado de direcciones" .-> GP[Google Places]
-    FE -. "teselas del mapa" .-> MAP[CARTO / OpenStreetMap]
+    FE -. "teselas del mapa" .-> MAP[OpenStreetMap]
     ADM[Administración] --> DA[Django admin<br/>/admin/]
     DA --> DB
 ```
@@ -74,5 +74,5 @@ El proyecto empezó como una app de Firebase y después pasó a Django. Hoy conv
 | Nominatim (OpenStreetMap) | Geocodificar direcciones a coordenadas | Backend (`Lugar.save()`, `/api/address-suggestions/search/`) y frontend (búsqueda desde la portada) |
 | Google Places | Autocompletado de direcciones | Frontend (`PlaceAutocomplete.jsx`) |
 | Firebase | Auth anónima, Firestore, Storage | Frontend (`App.js`) |
-| CARTO / OpenStreetMap | Teselas del mapa | Frontend (`MapComponent.js`) |
+| OpenStreetMap (configurable) | Teselas del mapa | Frontend (`MapComponent.js`) |
 | SMTP | Aviso por email de nuevas solicitudes de entidad | Backend (`lugares/signals.py`) |
