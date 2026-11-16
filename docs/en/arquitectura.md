@@ -18,9 +18,9 @@ flowchart LR
     DA --> DB
 ```
 
-- **Frontend** (`deporteca_frontend/`): a single React app. `App.js` is the main component: it holds almost all the state, loads the catalogues and runs the searches. The other components (`MainContent`, `LugarCard`, `MapComponent`, `LugarForm`, etc.) receive data and functions through props.
+- **Frontend** (`deporteca_frontend/`): a single React app. `App.js` is the main component: it holds almost all the state, loads the catalogues and runs the searches. The other components (`MainContent`, `LugarCard`, `MapComponent`, etc.) receive data and functions through props.
 - **Backend** (`deporteca_project/`): a Django project with a single app, `lugares`, containing the models, the API (DRF), filters, signals and the Django admin configuration.
-- **Django admin** (`/admin/`): the real management panel. This is where requests are reviewed, organisations approved and catalogues edited.
+- **Django admin** (`/admin/`): the real management panel. This is where requests are reviewed, organisations approved, venues created, edited and deleted, and catalogues edited. The web app has no venue editing.
 
 ## Search flow
 
@@ -60,7 +60,7 @@ The project started as a Firebase app and later moved to Django. Today both coex
 | Feature | Writes to | Reads from |
 |---|---|---|
 | Search, map and cards | — | **Django** |
-| Create, edit and delete venue (`LugarForm`, admin panel) | **Django** | Django |
+| Create, edit and delete venue | **Django admin** (`/admin/`) | Django |
 | Contact form / organisation sign-up | **Django** (`/api/contactos/`) | Django admin |
 | Suggest a place (simple message) | **Django** (`/api/sugerencias/`) | Django admin |
 | Suggest a place (full form, `SuggestPlaceForm`) | **Firestore** + Firebase Storage (logo) | nobody reads it back |

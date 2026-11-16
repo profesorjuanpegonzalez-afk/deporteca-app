@@ -1,9 +1,8 @@
 
 import React from 'react';
 import appLogo from './assets/logo.png';
-import { Trash2, Pencil } from 'lucide-react';
 
-const PlaceDetailModal = ({ lugar, onClose, onEdit, onDelete, isSuperAdmin = false, deporteIdToNameMap = {} }) => {
+const PlaceDetailModal = ({ lugar, onClose, deporteIdToNameMap = {} }) => {
     if (!lugar) return null;
     const getLogoSrc = lugar => lugar.logo_url || lugar.logo || appLogo;
     return (
@@ -73,39 +72,6 @@ const PlaceDetailModal = ({ lugar, onClose, onEdit, onDelete, isSuperAdmin = fal
                         </ul>
                     </div>
                 )}
-                {/* Botones de acción */}
-                <div className="flex gap-4 justify-center mt-4">
-                    {isSuperAdmin && typeof onDelete === 'function' && (
-                        <button
-                            type="button"
-                            className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
-                            onClick={() => {
-                                if (window.confirm(`¿Seguro que quieres eliminar "${lugar.nombre}"?`)) {
-                                    onDelete(lugar.id);
-                                    if (typeof onClose === 'function') onClose();
-                                }
-                            }}
-                            title="Eliminar lugar"
-                            style={{ display: 'inline-flex', alignItems: 'center' }}
-                        >
-                            <Trash2 size={22} />
-                        </button>
-                    )}
-                    {typeof onEdit === 'function' && (
-                        <button
-                            type="button"
-                            className="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
-                            onClick={() => {
-                                onEdit(lugar);
-                                if (typeof onClose === 'function') onClose();
-                            }}
-                            title="Editar lugar"
-                            style={{ display: 'inline-flex', alignItems: 'center' }}
-                        >
-                            <Pencil size={22} />
-                        </button>
-                    )}
-                </div>
             </div>
         </div>
     );

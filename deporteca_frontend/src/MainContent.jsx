@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LugarCard from './LugarCard';
 import MapComponent from './MapComponent';
-import LugarForm from './LugarForm';
 import PlaceAutocomplete from './PlaceAutocomplete';
 
 function MainContent(props) {
@@ -53,11 +52,7 @@ function MainContent(props) {
         activeView = 'list',
         setActiveView = () => {},
         handlePlaceClick = () => {},
-        handleEditPlace = () => {},
-        handleDeleteLugar = () => {},
     } = props;
-
-    const [showModal, setShowModal] = useState(false);
 
     return (
         <>
@@ -80,7 +75,6 @@ function MainContent(props) {
                             </button>
                             {isSuperAdmin && (
                                 <>
-                                    <button onClick={() => setShowModal(true)} className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-800 transition-colors">Añadir lugar</button>
                                     <button onClick={onShowAdminModal} className="p-2 rounded-full bg-gray-700 text-white hover:bg-gray-900 transition-colors">Admin</button>
                                 </>
                             )}
@@ -271,9 +265,6 @@ function MainContent(props) {
                                             key={lugar.id}
                                             lugar={lugar}
                                             onPlaceClick={() => handlePlaceClick(lugar)}
-                                            isSuperAdmin={isSuperAdmin}
-                                            onEdit={() => handleEditPlace(lugar)}
-                                            onDelete={() => handleDeleteLugar(lugar.id)}
                                         />
                                     ))
                                 ) : (
@@ -293,9 +284,6 @@ function MainContent(props) {
                     </section>
                 </main>
             </div>
-            {showModal && (
-                <LugarForm onClose={() => setShowModal(false)} onSaved={() => setShowModal(false)} />
-            )}
         </>
     );
 }

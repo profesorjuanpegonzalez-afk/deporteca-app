@@ -3,7 +3,6 @@ import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }
 import { getFirestore, collection, onSnapshot, addDoc, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import LugarForm from './LugarForm.jsx';
 
 import MainContent from './MainContent.jsx';
 import PlaceDetailModal from './PlaceDetailModal.jsx';
@@ -112,7 +111,6 @@ function App() {
     const [selectedDistance, setSelectedDistance] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('');
 
-    const [showAddPlaceModal, setShowAddPlaceModal] = useState(false);
     const [showSuggestPlaceModal, setShowSuggestPlaceModal] = useState(false);
     const [showPlaceDetailModal, setShowPlaceDetailModal] = useState(false);
     const [showContactModal, setShowContactModal] = useState(false);
@@ -135,7 +133,6 @@ function App() {
     const [editingContentItem, setEditingContentItem] = useState(null);
     const [adminSubmissionMessage, setAdminSubmissionMessage] = useState('');
 
-    const [lugarEditando, setLugarEditando] = useState(null);
     const [logoFile, setLogoFile] = useState(null);
 
     useEffect(() => {
@@ -419,7 +416,6 @@ function App() {
     }, []);
 
     const closeModals = useCallback(() => {
-        setShowAddPlaceModal(false);
         setShowPlaceDetailModal(false);
         setShowContactModal(false);
         setShowProfileModal(false);
@@ -431,25 +427,6 @@ function App() {
     const handlePlaceClick = useCallback((place) => {
         setSelectedPlace(place);
         setShowPlaceDetailModal(true);
-    }, []);
-
-    // Modifica handleEditPlace para guardar el lugar a editar
-    const handleEditPlace = useCallback((place) => {
-        setShowPlaceDetailModal(false);
-        const lugarSeguro = normalizeLugarFromBackend(place);
-        setLugarEditando(lugarSeguro);
-        setShowAddPlaceModal(true);
-    }, []);
-
-    // Nueva función para manejar la edición y actualizar la lista
-    const handleSubmitLugarEditado = useCallback((lugarEditado) => {
-        const lugarNormalizado = normalizeLugarFromBackend(lugarEditado);
-        setFilteredLugares(prev =>
-            prev.map(lugar => (lugar.id === lugarNormalizado.id ? { ...lugar, ...lugarNormalizado } : lugar))
-        );
-        setShowAddPlaceModal(false);
-        setLugarEditando(null);
-        setSubmissionMessage({ text: 'Lugar actualizado correctamente.', type: 'success' });
     }, []);
 
     const handleGetLocation = useCallback(() => {
@@ -665,8 +642,6 @@ function App() {
         edadOptions,
         filteredLugares,
         isSuperAdmin,
-        showAddPlaceModal,
-        setShowAddPlaceModal,
         closeModals,
         handleAddLugar,
         handlePlaceClick,
@@ -719,7 +694,6 @@ function App() {
         getLogoSrc: (place) => place.logo_url && typeof place.logo_url === 'string' && place.logo_url.startsWith('http') ? place.logo_url : appLogo,
         showPlaceDetailModal,
         selectedPlace,
-        handleEditPlace,
         showContactModal,
         setShowContactModal,
         handleContactSubmit,
@@ -774,22 +748,6 @@ function App() {
     const handleDeleteContentItem = async (collectionName, id) => {
         if (!db) throw new Error('Firestore DB no inicializado');
         await deleteDoc(doc(db, 'artifacts', appId, 'public/data', collectionName, id));
-    };
-
-    const handleDeleteLugar = async (lugarId, lugarNombre) => {
-        if (!lugarId) return;
-        try {
-            const response = await fetch(`${backendApiBase}/api/lugares/${lugarId}/`, {
-                method: 'DELETE',
-            });
-            if (!response.ok && response.status !== 204) {
-                throw new Error(`HTTP ${response.status}`);
-            }
-            setFilteredLugares(prev => prev.filter(lugar => String(lugar.id) !== String(lugarId)));
-            setSubmissionMessage({ text: `Lugar "${lugarNombre}" eliminado correctamente.`, type: 'success' });
-        } catch (e) {
-            setSubmissionMessage({ text: `Error al eliminar el lugar: ${e.message}`, type: 'error' });
-        }
     };
 
     useEffect(() => {
@@ -946,8 +904,6 @@ function App() {
                 onShowEntityRegistration={() => setShowEntityRegistrationModal(true)}
                 deportes={deportes}
                 setShowPlaceDetailModal={setShowPlaceDetailModal}
-                handleDeleteLugar={handleDeleteLugar}
-                handleEditPlace={handleEditPlace}
                 userName={userName}
                 handleChangeUserName={handleChangeUserName}
                 logoFile={logoFile}
@@ -960,18 +916,7 @@ function App() {
                 <PlaceDetailModal
                     lugar={selectedPlace}
                     onClose={() => setShowPlaceDetailModal(false)}
-                    onEdit={handleEditPlace}
-                    onDelete={handleDeleteLugar}
-                    isSuperAdmin={isSuperAdmin}
                     deporteIdToNameMap={deporteIdToNameMap}
-                />
-            )}
-            {/* Formulario de edición */}
-            {showAddPlaceModal && lugarEditando && (
-                <LugarForm
-                    lugarEditando={lugarEditando}
-                    onSaved={handleSubmitLugarEditado}
-                    onClose={() => { setShowAddPlaceModal(false); setLugarEditando(null); }}
                 />
             )}
             {showAdminModal && isSuperAdmin && (

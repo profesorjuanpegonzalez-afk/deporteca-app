@@ -42,7 +42,7 @@ Al arrancar, `App.js` espera al login anónimo de Firebase **y** a la primera le
 
 ### `App.js` demasiado grande
 
-Más de 1000 líneas con casi todo el estado y la lógica. La URL del backend se define en tres archivos (`App.js`, `LugarForm.jsx`, `EntityRegistrationModal.jsx`).
+Más de 1000 líneas con casi todo el estado y la lógica. La URL del backend se define en dos archivos (`App.js`, `EntityRegistrationModal.jsx`).
 
 ## 🟡 Errores y detalles
 
