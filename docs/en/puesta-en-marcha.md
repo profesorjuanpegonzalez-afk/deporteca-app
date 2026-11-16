@@ -11,6 +11,40 @@ This page explains how to set up the environment from scratch, how to start it a
 - Node.js 18 or later
 - PostgreSQL 15 or later: installed on the system **or** via Docker (see below)
 
+Or just Docker, with the quick start.
+
+## Quick start with Docker (recommended)
+
+All you need is [Docker](https://docs.docker.com/get-docker/) (Docker Desktop on Windows and macOS). It starts the database, the backend and the frontend with one command. From the repository root:
+
+```bash
+# First time only: create the .env files and fill in at least POSTGRES_PASSWORD and DJANGO_SECRET_KEY
+cp deporteca_project/.env.example deporteca_project/.env    # Windows: copy
+cp deporteca_frontend/.env.example deporteca_frontend/.env
+
+docker compose up -d --build
+docker compose exec api python manage.py seed_catalogos
+docker compose exec api python manage.py seed_demo_lugares   # or loaddata provincias_y_ccaa.json (see step 2)
+docker compose exec api python manage.py createsuperuser
+```
+
+- App: `http://localhost:3000` · Admin: `http://localhost:8000/admin/`
+- The code is mounted into the containers: when you save a file, the backend and the frontend reload on their own.
+- Migrations are applied automatically when the backend starts.
+- Any Django command: `docker compose exec api python manage.py <command>` (for example `test lugares.tests`).
+
+| To… | Command |
+|---|---|
+| See the logs | `docker compose logs -f api` (or `web`, `db`) |
+| Stop (data is kept) | `docker compose down` |
+| Start again | `docker compose up -d` |
+| After changing `requirements.txt` or `package.json` | `docker compose up -d --build` |
+| Also delete the database | `docker compose down -v` |
+
+Settings specific to your machine (other ports, a network, a local domain…) go in `compose.override.yaml`, which git ignores. Docker applies it automatically.
+
+If you'd rather not use Docker, follow steps 1 to 3.
+
 ## 1. Database
 
 Pick **one** option.

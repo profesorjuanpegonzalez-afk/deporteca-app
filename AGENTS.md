@@ -58,6 +58,8 @@ ruff check .
 python manage.py runserver
 ```
 
+With Docker (`compose.yaml` at the repo root), run backend commands as `docker compose exec api python manage.py …` and frontend ones as `docker compose exec web npm …`.
+
 Frontend (from `deporteca_frontend/`):
 
 ```bash
