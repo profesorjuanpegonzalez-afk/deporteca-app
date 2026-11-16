@@ -4,14 +4,6 @@ Lista de problemas detectados en la revisión del código (octubre 2026), ordena
 
 ## 🔴 Antes de desplegar
 
-### La API de lugares no exige autenticación
-
-`LugarViewSet` usa `permission_classes = [AllowAny]`, así que **cualquiera** puede crear, editar o borrar lugares con `POST/PUT/PATCH/DELETE /api/lugares/`. Solo las acciones de administración (aprobar, rechazar, estadísticas…) exigen `IsAdminUser`.
-
-Además, el panel de administración del frontend se muestra según un rol guardado en **Firestore**, pero llama a Django **sin enviar credenciales de Django**. Resultado: las acciones `IsAdminUser` fallan desde el frontend, y las de escritura funcionan para todo el mundo.
-
-**Solución:** elegir un sistema de autenticación único (sesión/token de Django, o verificar el token de Firebase en Django), exigirlo en las escrituras y quitar la comprobación de rol en el cliente como única barrera.
-
 ### `/api/lugares/` lista también los no publicables
 
 El listado y el detalle devuelven todos los lugares, incluidos `pending`, `rejected` e `inactive`. Solo `busqueda-avanzada` filtra por publicables.
@@ -54,6 +46,6 @@ Más de 1000 líneas con casi todo el estado y la lógica. La URL del backend se
 - **El mensaje de error de búsqueda tiene la URL escrita a mano.** "No se ha podido conectar con el backend de búsqueda" siempre dice `http://127.0.0.1:8000`, aunque `REACT_APP_BACKEND_API_BASE` sea otra.
 - **Nominatim** se usa para autocompletado y geocodificación. Su política de uso no permite autocompletado ni uso intensivo; en producción hace falta otro proveedor o una instancia propia.
 - **Errores internos expuestos.** Varios `except Exception` devuelven el texto del error al cliente.
-- **Sin tests.** `lugares/tests.py` está vacío.
+- **Pocos tests.** `lugares/tests.py` solo cubre los permisos de la API.
 - **11 avisos de ESLint** en el frontend. En CI, `CI=true` hace que `npm run build` los trate como errores.
 - **Scripts antiguos de Firestore.** `migrate_to_firestore.py`, `deporteca_frontend/populate_regions.py` y `addProvincias.js` son de la etapa Firebase y necesitan credenciales que no están en el repo.

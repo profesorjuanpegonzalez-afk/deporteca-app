@@ -7,8 +7,8 @@ The REST API is built with Django REST Framework and lives under `/api/`. Routes
 
 In development, open `http://127.0.0.1:8000/api/` in a browser to use DRF's **browsable API**.
 
-!!! warning "Permissions"
-    The `lugares` write endpoints **don't require authentication** yet (see [Known issues](problemas-conocidos.md)). Endpoints marked *Admin* require an `is_staff` user with a Django session.
+!!! note "Permissions"
+    The API is **closed by default**: only staff (`is_staff`) with a Django session can use it, except for routes marked *Public*. The API **doesn't create, edit or delete venues**: that happens in the Django admin (`/admin/`).
 
 ## Venues (`lugares`)
 
@@ -16,12 +16,9 @@ In development, open `http://127.0.0.1:8000/api/` in a browser to use DRF's **br
 |---|---|---|---|
 | GET | `/api/lugares/` | Public | List with filters (`LugarFilter`). Returns **all** venues, including non-publishable ones |
 | GET | `/api/lugares/{id}/` | Public | Venue detail |
-| POST | `/api/lugares/` | Public ⚠️ | Create a venue (`nombre` required) with its `ofertas` |
-| PUT / PATCH | `/api/lugares/{id}/` | Public ⚠️ | Edit a venue. If `ofertas` is sent, all offers are **replaced** |
-| DELETE | `/api/lugares/{id}/` | Public ⚠️ | Delete a venue |
 | GET | `/api/lugares/busqueda-avanzada/` | Public | **Main search** (see below) |
 | GET | `/api/lugares/tipos-lugar/` | Public | Possible `tipo` values |
-| GET | `/api/lugares/{id}/estado-publicacion/` | Public | Whether the venue is publishable and what it's missing |
+| GET | `/api/lugares/{id}/estado-publicacion/` | Admin | Whether the venue is publishable and what it's missing |
 | GET | `/api/lugares/panel-estado/` | Admin | Publication status of every venue |
 | GET | `/api/lugares/pendientes-aprobacion/` | Admin | Venues in `pending` |
 | POST | `/api/lugares/{id}/aprobar/` | Admin | → `approved` |
@@ -47,22 +44,6 @@ Returns **publishable** venues only. Paginated response:
 | `latitud`, `longitud`, `radio_km` | number | Only venues inside the radius |
 | `page`, `page_size` | number | Pagination (`page_size` max. 100, default 20) |
 | `include_not_publishable` | `true` | Include non-publishable venues (only takes effect for admins) |
-
-### `ofertas` format when creating or editing
-
-```json
-{
-  "nombre": "Club Deportivo Norte",
-  "tipo": "club_asociacion",
-  "provincia_id": 1,
-  "direccion": "Calle Mayor 1, Madrid",
-  "ofertas": [
-    { "deporte": "3", "tipo_servicio": "1", "tipo_competicion": "2", "sexos": ["1", "2"], "edades": ["4"] }
-  ]
-}
-```
-
-Each `sexos` × `edades` combination is stored as a separate `OfertaDeportiva`.
 
 ## Catalogues (read-only)
 

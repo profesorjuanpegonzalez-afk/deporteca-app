@@ -54,6 +54,7 @@ Backend (from `deporteca_project/`, with `.venv` active):
 pip install -r requirements.txt
 python manage.py check
 python manage.py makemigrations --check --dry-run
+python manage.py test lugares.tests
 ruff check .
 python manage.py runserver
 ```
@@ -102,7 +103,7 @@ Things that have caused confusion before:
 
 ### Backend
 
-- Every new or changed view **must declare `permission_classes` explicitly**. Don't add new `AllowAny` write endpoints. Known gap: `LugarViewSet` writes are currently `AllowAny`; don't copy that pattern.
+- The API is closed by default (`IsAdminUser`, session auth only, set in `settings.py`). Public routes must declare `permission_classes = [AllowAny]` explicitly. Don't add `AllowAny` write endpoints except narrow public forms. Venues are created, edited and deleted in the Django admin, not through `/api/lugares/` (read-only).
 - Business rules belong in the model (`models.py`: `save()`, `clean()`, properties), not in views or the frontend.
 - Changing a model requires a migration in the same change: `python manage.py makemigrations lugares`. Never edit an applied migration.
 - Don't return raw exception text to clients in new code.

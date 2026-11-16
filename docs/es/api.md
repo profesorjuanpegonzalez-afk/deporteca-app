@@ -4,8 +4,8 @@ La API REST está hecha con Django REST Framework y vive bajo `/api/`. Las rutas
 
 En desarrollo, abre `http://127.0.0.1:8000/api/` en el navegador para usar la **API navegable** de DRF.
 
-!!! warning "Permisos"
-    Los endpoints de escritura de `lugares` **no exigen autenticación** todavía (ver [Problemas conocidos](problemas-conocidos.md)). Los marcados como *Admin* exigen un usuario `is_staff` con sesión de Django.
+!!! note "Permisos"
+    La API está **cerrada por defecto**: solo el personal (`is_staff`) con sesión de Django puede usarla, salvo las rutas marcadas como *Público*. La API **no crea, edita ni borra lugares**: eso se hace en el admin de Django (`/admin/`).
 
 ## Lugares
 
@@ -13,12 +13,9 @@ En desarrollo, abre `http://127.0.0.1:8000/api/` en el navegador para usar la **
 |---|---|---|---|
 | GET | `/api/lugares/` | Público | Listado con filtros (`LugarFilter`). Devuelve **todos** los lugares, también los no publicables |
 | GET | `/api/lugares/{id}/` | Público | Detalle de un lugar |
-| POST | `/api/lugares/` | Público ⚠️ | Crear lugar (`nombre` obligatorio) con sus `ofertas` |
-| PUT / PATCH | `/api/lugares/{id}/` | Público ⚠️ | Editar lugar. Si se envía `ofertas`, se **reemplazan** todas |
-| DELETE | `/api/lugares/{id}/` | Público ⚠️ | Borrar lugar |
 | GET | `/api/lugares/busqueda-avanzada/` | Público | **Búsqueda principal** (ver abajo) |
 | GET | `/api/lugares/tipos-lugar/` | Público | Valores posibles de `tipo` |
-| GET | `/api/lugares/{id}/estado-publicacion/` | Público | Si el lugar es publicable y qué le falta |
+| GET | `/api/lugares/{id}/estado-publicacion/` | Admin | Si el lugar es publicable y qué le falta |
 | GET | `/api/lugares/panel-estado/` | Admin | Estado de publicación de todos los lugares |
 | GET | `/api/lugares/pendientes-aprobacion/` | Admin | Lugares en `pending` |
 | POST | `/api/lugares/{id}/aprobar/` | Admin | → `approved` |
@@ -44,22 +41,6 @@ Solo devuelve lugares **publicables**. Respuesta paginada:
 | `latitud`, `longitud`, `radio_km` | número | Solo lugares dentro del radio |
 | `page`, `page_size` | número | Paginación (`page_size` máx. 100, por defecto 20) |
 | `include_not_publishable` | `true` | Incluir no publicables (solo tiene efecto para admin) |
-
-### Formato de `ofertas` al crear o editar
-
-```json
-{
-  "nombre": "Club Deportivo Norte",
-  "tipo": "club_asociacion",
-  "provincia_id": 1,
-  "direccion": "Calle Mayor 1, Madrid",
-  "ofertas": [
-    { "deporte": "3", "tipo_servicio": "1", "tipo_competicion": "2", "sexos": ["1", "2"], "edades": ["4"] }
-  ]
-}
-```
-
-Cada combinación de `sexos` × `edades` se guarda como una `OfertaDeportiva` distinta.
 
 ## Catálogos (solo lectura)
 

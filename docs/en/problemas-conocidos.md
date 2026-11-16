@@ -7,14 +7,6 @@ Issues found during the code review (October 2026), ordered by priority. When on
 
 ## 🔴 Before deploying
 
-### The venues API doesn't require authentication
-
-`LugarViewSet` uses `permission_classes = [AllowAny]`, so **anyone** can create, edit or delete venues with `POST/PUT/PATCH/DELETE /api/lugares/`. Only the admin actions (approve, reject, statistics…) require `IsAdminUser`.
-
-On top of that, the frontend's admin panel is shown based on a role stored in **Firestore**, but it calls Django **without sending any Django credentials**. As a result, the `IsAdminUser` actions fail from the frontend, and the write actions work for everyone.
-
-**Fix:** pick a single authentication system (Django session/token, or verify the Firebase token in Django), require it on writes, and stop relying on the client-side role check as the only barrier.
-
 ### `/api/lugares/` also lists non-publishable venues
 
 The list and detail endpoints return every venue, including `pending`, `rejected` and `inactive` ones. Only `busqueda-avanzada` filters by publishable.
@@ -57,6 +49,6 @@ Over 1000 lines holding almost all the state and logic. The backend URL is defin
 - **The search error message has a hardcoded URL.** "No se ha podido conectar con el backend de búsqueda" always says `http://127.0.0.1:8000`, even when `REACT_APP_BACKEND_API_BASE` is different.
 - **Nominatim** is used for autocomplete and geocoding. Its usage policy forbids autocomplete and heavy use; production needs another provider or a self-hosted instance.
 - **Internal errors exposed.** Several `except Exception` blocks return the error text to the client.
-- **No tests.** `lugares/tests.py` is empty.
+- **Few tests.** `lugares/tests.py` only covers the API permissions.
 - **11 ESLint warnings** in the frontend. In CI, `CI=true` makes `npm run build` treat them as errors.
 - **Old Firestore scripts.** `migrate_to_firestore.py`, `deporteca_frontend/populate_regions.py` and `addProvincias.js` date from the Firebase stage and need credentials that aren't in the repo.
