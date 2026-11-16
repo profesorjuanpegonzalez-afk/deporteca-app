@@ -1,0 +1,50 @@
+# Entorno de desarrollo: docker compose up
+#   App:   http://localhost:3000
+#   Admin: http://localhost:8000/admin/
+# Configuración: deporteca_project/.env y deporteca_frontend/.env (copiar desde .env.example).
+# Ajustes propios de tu máquina: compose.override.yaml (ignorado por git).
+
+services:
+  db:
+    image: postgres:15
+    env_file: deporteca_project/.env  # usa POSTGRES_DB, POSTGRES_USER y POSTGRES_PASSWORD
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build: deporteca_project
+    env_file: deporteca_project/.env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+    command: sh -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./deporteca_project:/app
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build: deporteca_frontend
+    env_file: deporteca_frontend/.env
+    environment:
+      WDS_SOCKET_PORT: "0"  # recarga en vivo también detrás de un proxy
+    volumes:
+      - ./deporteca_frontend:/app
+      - /app/node_modules  # las dependencias quedan dentro del contenedor
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:

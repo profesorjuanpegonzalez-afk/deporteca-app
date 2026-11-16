@@ -22,6 +22,9 @@ build/
 ~$*
 backup*.txt
 
+# Docker: ajustes locales de cada máquina
+compose.override.yaml
+
 # Editores / SO
 .vscode/
 .idea/

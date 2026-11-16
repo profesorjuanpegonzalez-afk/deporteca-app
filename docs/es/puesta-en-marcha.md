@@ -8,6 +8,40 @@ Esta página explica cómo montar el entorno desde cero, cómo volver a arrancar
 - Node.js 18 o superior
 - PostgreSQL 15 o superior: instalado en el sistema **o** con Docker (ver abajo)
 
+O solo Docker, con el arranque rápido.
+
+## Arranque rápido con Docker (recomendado)
+
+Solo necesitas [Docker](https://docs.docker.com/get-docker/) (Docker Desktop en Windows y macOS). Levanta la base de datos, el backend y el frontend con un comando. Desde la raíz del repositorio:
+
+```bash
+# Solo la primera vez: crea los .env y rellena al menos POSTGRES_PASSWORD y DJANGO_SECRET_KEY
+cp deporteca_project/.env.example deporteca_project/.env    # Windows: copy
+cp deporteca_frontend/.env.example deporteca_frontend/.env
+
+docker compose up -d --build
+docker compose exec api python manage.py seed_catalogos
+docker compose exec api python manage.py seed_demo_lugares   # o loaddata provincias_y_ccaa.json (ver paso 2)
+docker compose exec api python manage.py createsuperuser
+```
+
+- App: `http://localhost:3000` · Admin: `http://localhost:8000/admin/`
+- El código está montado en los contenedores: al guardar un archivo, el backend y el frontend se recargan solos.
+- Las migraciones se aplican solas al arrancar el backend.
+- Cualquier comando de Django: `docker compose exec api python manage.py <comando>` (por ejemplo `test lugares.tests`).
+
+| Para… | Comando |
+|---|---|
+| Ver los registros | `docker compose logs -f api` (o `web`, `db`) |
+| Parar (se conservan los datos) | `docker compose down` |
+| Volver a arrancar | `docker compose up -d` |
+| Tras cambiar `requirements.txt` o `package.json` | `docker compose up -d --build` |
+| Borrar también la base de datos | `docker compose down -v` |
+
+Ajustes propios de tu máquina (otros puertos, una red, un dominio local…) van en `compose.override.yaml`, que git ignora. Docker lo aplica automáticamente.
+
+Si prefieres no usar Docker, sigue los pasos 1 a 3.
+
 ## 1. Base de datos
 
 Elige **una** opción.

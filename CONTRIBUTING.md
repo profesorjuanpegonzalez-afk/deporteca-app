@@ -76,6 +76,8 @@ python manage.py test lugares.tests
 ruff check .
 ```
 
+Con Docker, antepón `docker compose exec api` a cada comando (por ejemplo `docker compose exec api python manage.py check`).
+
 Abre la app y prueba a mano lo que has cambiado. Si cambiaste la documentación, construye ES y luego EN (ver `AGENTS.md`).
 
 ### 5. Guardar y subir
