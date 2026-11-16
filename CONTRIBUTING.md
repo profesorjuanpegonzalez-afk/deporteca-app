@@ -72,6 +72,7 @@ Desde `deporteca_project/` (con `.venv` activado):
 ```bash
 python manage.py check
 python manage.py makemigrations --check --dry-run
+python manage.py test lugares.tests
 ruff check .
 ```
 

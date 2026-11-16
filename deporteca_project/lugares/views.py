@@ -4,7 +4,6 @@ from rest_framework.decorators import action # pyright: ignore[reportMissingImpo
 from rest_framework.permissions import AllowAny, IsAdminUser
 from django.db.models import Q
 from django.db.models import Case, When, Value, IntegerField, Count
-from django.db import transaction
 from django.db.models.functions import TruncDate
 from geopy.geocoders import Nominatim # pyright: ignore[reportMissingImports]
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError # pyright: ignore[reportMissingImports]
@@ -12,7 +11,7 @@ from geopy.distance import geodesic # pyright: ignore[reportMissingImports]
 
 from .models import (
     Lugar, Deporte, Sexo, CategoriaEdad,
-    ComunidadAutonoma, Provincia, OfertaDeportiva,
+    ComunidadAutonoma, Provincia,
     TipoEvento, Evento,
     Servicio, Contacto, Sugerencia,
     TipoCompeticion, TipoServicioOferta, SearchLog
@@ -26,184 +25,17 @@ from .serializers import (
 )
 from .filters import LugarFilter
 
-class LugarViewSet(viewsets.ModelViewSet):
+class LugarViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    ViewSet para listar y recuperar detalles de Lugares.
-    Permite filtrar lugares.
+    Lugares: lectura pública, acciones de administración solo para el personal.
+    La API no crea, edita ni borra lugares: eso se hace en el admin de Django (/admin/).
     """
     queryset = Lugar.objects.all()
     serializer_class = LugarSerializer
     filterset_class = LugarFilter
     permission_classes = [AllowAny]
 
-    def _to_int(self, value):
-        try:
-            if value in (None, ''):
-                return None
-            return int(value)
-        except (TypeError, ValueError):
-            return None
-
-    def _to_float(self, value):
-        try:
-            if value in (None, ''):
-                return None
-            return float(value)
-        except (TypeError, ValueError):
-            return None
-
-    def _normalize_list_ids(self, values):
-        if values in (None, ''):
-            return []
-        if not isinstance(values, list):
-            values = [values]
-        out = []
-        for item in values:
-            parsed = self._to_int(item)
-            if parsed is not None:
-                out.append(parsed)
-        return out
-
-    def _build_ofertas_for_response(self, lugar):
-        ofertas = []
-        for oferta in lugar.ofertas_deportivas.select_related(
-            'deporte', 'sexo_permitido', 'categoria_edad', 'tipo_competicion', 'tipo_servicio'
-        ).all():
-            ofertas.append({
-                'deporte': str(oferta.deporte_id) if oferta.deporte_id else '',
-                'tipo_servicio': str(oferta.tipo_servicio_id) if oferta.tipo_servicio_id else '',
-                'tipo_competicion': str(oferta.tipo_competicion_id) if oferta.tipo_competicion_id else '',
-                'sexos': [str(oferta.sexo_permitido_id)] if oferta.sexo_permitido_id else [],
-                'edades': [str(oferta.categoria_edad_id)] if oferta.categoria_edad_id else [],
-                'deporte_nombre': oferta.deporte.nombre if oferta.deporte else '',
-                'tipo_servicio_nombre': oferta.tipo_servicio.nombre if oferta.tipo_servicio else '',
-                'tipo_competicion_nombre': oferta.tipo_competicion.nombre if oferta.tipo_competicion else '',
-                'sexos_nombres': [oferta.sexo_permitido.opcion] if oferta.sexo_permitido else [],
-                'edades_nombres': [oferta.categoria_edad.nombre] if oferta.categoria_edad else [],
-            })
-        return ofertas
-
-    def _serialize_for_frontend(self, request, lugar):
-        payload = LugarSerializer(lugar, context={'request': request}).data
-        payload['provincia_id'] = str(lugar.provincia_id) if lugar.provincia_id else ''
-        payload['comunidad_autonoma_id'] = str(lugar.comunidad_autonoma_id) if lugar.comunidad_autonoma_id else ''
-        payload['mail'] = payload.get('email') or ''
-        payload['instagram'] = payload.get('instagram_link') or ''
-        payload['twitter'] = payload.get('x_link') or ''
-        payload['tipoLugar'] = payload.get('tipo') or ''
-        payload['provincia'] = lugar.provincia.nombre if lugar.provincia else ''
-        payload['ofertas'] = self._build_ofertas_for_response(lugar)
-        return payload
-
-    def _apply_lugar_payload(self, lugar, data):
-        lugar.nombre = data.get('nombre', lugar.nombre)
-        lugar.descripcion = data.get('descripcion', lugar.descripcion)
-        lugar.direccion = data.get('direccion', lugar.direccion)
-
-        tipo_lugar = data.get('tipo') or data.get('tipoLugar')
-        if tipo_lugar not in (None, ''):
-            lugar.tipo = tipo_lugar
-
-        provincia_id = self._to_int(data.get('provincia_id', data.get('provincia')))
-        if provincia_id is not None:
-            lugar.provincia_id = provincia_id
-
-        comunidad_id = self._to_int(data.get('comunidad_autonoma_id', data.get('comunidad_autonoma')))
-        if comunidad_id is not None:
-            lugar.comunidad_autonoma_id = comunidad_id
-        elif lugar.provincia_id:
-            provincia = Provincia.objects.filter(id=lugar.provincia_id).select_related('comunidad_autonoma').first()
-            if provincia and provincia.comunidad_autonoma_id:
-                lugar.comunidad_autonoma_id = provincia.comunidad_autonoma_id
-
-        latitud = data.get('latitud')
-        longitud = data.get('longitud')
-        coordenadas = data.get('coordenadas') if isinstance(data.get('coordenadas'), dict) else {}
-
-        lat = self._to_float(latitud if latitud not in (None, '') else coordenadas.get('latitude'))
-        lon = self._to_float(longitud if longitud not in (None, '') else coordenadas.get('longitude'))
-        if lat is not None:
-            lugar.latitud = lat
-        if lon is not None:
-            lugar.longitud = lon
-
-        lugar.telefono = data.get('telefono', lugar.telefono)
-        lugar.web = data.get('web', lugar.web)
-        lugar.instagram_link = data.get('instagram_link', data.get('instagram', lugar.instagram_link))
-        lugar.x_link = data.get('x_link', data.get('twitter', lugar.x_link))
-        lugar.email = data.get('email', data.get('mail', lugar.email))
-        lugar.logo_url = data.get('logo_url', data.get('logoUrl', lugar.logo_url))
-
-        lugar.full_clean()
-        lugar.save()
-
-        if 'ofertas' in data:
-            ofertas_data = data.get('ofertas') or []
-            if not isinstance(ofertas_data, list):
-                ofertas_data = []
-
-            lugar.ofertas_deportivas.all().delete()
-            for oferta in ofertas_data:
-                if not isinstance(oferta, dict):
-                    continue
-
-                deporte_id = self._to_int(oferta.get('deporte'))
-                if not deporte_id:
-                    continue
-
-                tipo_competicion_id = self._to_int(oferta.get('tipo_competicion'))
-                tipo_servicio_id = self._to_int(oferta.get('tipo_servicio'))
-                sexos = self._normalize_list_ids(oferta.get('sexos')) or [None]
-                edades = self._normalize_list_ids(oferta.get('edades')) or [None]
-
-                for sexo_id in sexos:
-                    for edad_id in edades:
-                        OfertaDeportiva.objects.create(
-                            lugar=lugar,
-                            deporte_id=deporte_id,
-                            sexo_permitido_id=sexo_id,
-                            categoria_edad_id=edad_id,
-                            tipo_competicion_id=tipo_competicion_id,
-                            tipo_servicio_id=tipo_servicio_id,
-                            activa=True,
-                        )
-
-        return lugar
-
-    def create(self, request, *args, **kwargs):
-        data = request.data if isinstance(request.data, dict) else {}
-        if not data.get('nombre'):
-            return Response({'detail': 'El campo "nombre" es obligatorio.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        with transaction.atomic():
-            lugar = Lugar()
-            self._apply_lugar_payload(lugar, data)
-
-        return Response(self._serialize_for_frontend(request, lugar), status=status.HTTP_201_CREATED)
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        lugar = self.get_object()
-        data = request.data if isinstance(request.data, dict) else {}
-
-        if not partial and not data.get('nombre'):
-            return Response({'detail': 'El campo "nombre" es obligatorio.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        with transaction.atomic():
-            self._apply_lugar_payload(lugar, data)
-
-        return Response(self._serialize_for_frontend(request, lugar), status=status.HTTP_200_OK)
-
-    def partial_update(self, request, *args, **kwargs):
-        kwargs['partial'] = True
-        return self.update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        lugar = self.get_object()
-        lugar.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-    @action(detail=True, methods=['get'], url_path='estado-publicacion')
+    @action(detail=True, methods=['get'], url_path='estado-publicacion', permission_classes=[IsAdminUser])
     def estado_publicacion(self, request, pk=None):
         lugar = self.get_object()
         return Response({
@@ -458,6 +290,7 @@ class DeporteViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Deporte.objects.all()
     serializer_class = DeporteSerializer
+    permission_classes = [AllowAny]
 
 class SexoViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -465,6 +298,7 @@ class SexoViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Sexo.objects.all()
     serializer_class = SexoSerializer
+    permission_classes = [AllowAny]
 
 class CategoriaEdadViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -472,14 +306,17 @@ class CategoriaEdadViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = CategoriaEdad.objects.all()
     serializer_class = CategoriaEdadSerializer
+    permission_classes = [AllowAny]
 
 class TipoCompeticionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TipoCompeticion.objects.all()
     serializer_class = TipoCompeticionSerializer
+    permission_classes = [AllowAny]
 
 class TipoServicioOfertaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TipoServicioOferta.objects.all()
     serializer_class = TipoServicioOfertaSerializer
+    permission_classes = [AllowAny]
 
 class ComunidadAutonomaViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -487,6 +324,7 @@ class ComunidadAutonomaViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = ComunidadAutonoma.objects.all()
     serializer_class = ComunidadAutonomaSerializer
+    permission_classes = [AllowAny]
 
 class ProvinciaViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -494,11 +332,14 @@ class ProvinciaViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Provincia.objects.all()
     serializer_class = ProvinciaSerializer
+    permission_classes = [AllowAny]
 
 class AddressSuggestionView(viewsets.ViewSet):
     """
     Vista para obtener sugerencias de dirección utilizando Nominatim.
     """
+    permission_classes = [AllowAny]
+
     @action(detail=False, methods=['get'])
     def search(self, request):
         query = request.query_params.get('query', '')
@@ -538,6 +379,7 @@ class TipoEventoViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = TipoEvento.objects.all()
     serializer_class = TipoEventoSerializer
+    permission_classes = [AllowAny]
 
 class EventoViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -545,6 +387,7 @@ class EventoViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Evento.objects.all()
     serializer_class = EventoSerializer
+    permission_classes = [AllowAny]
 
 class ServicioViewSet(viewsets.ModelViewSet):
     """
@@ -567,6 +410,7 @@ class ContactoViewSet(viewsets.ModelViewSet):
     queryset = Contacto.objects.all()
     serializer_class = ContactoSerializer
     http_method_names = ['post']
+    permission_classes = [AllowAny]  # formulario público
 
     def list(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
@@ -584,6 +428,7 @@ class SugerenciaViewSet(viewsets.ModelViewSet):
     queryset = Sugerencia.objects.all()
     serializer_class = SugerenciaSerializer
     http_method_names = ['post']
+    permission_classes = [AllowAny]  # formulario público
 
     def list(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)

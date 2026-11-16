@@ -156,7 +156,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # Esto ya lo tienes, asegú
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
-    ]
+    ],
+    # Solo sesión de Django (sin autenticación básica: no se adivinan contraseñas por la API).
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    # Cerrado por defecto: cada ruta pública declara permission_classes = [AllowAny].
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
 }
 
 # Configuración de CORS

@@ -192,6 +192,7 @@ Each folder has a `.env.example` listing every variable. `.env` files are in `.g
 ```bash
 # Backend
 python manage.py check
+python manage.py test lugares.tests
 ruff check .                  # requires: pip install ruff
 
 # Frontend

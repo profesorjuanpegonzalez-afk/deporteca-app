@@ -189,6 +189,7 @@ Cada carpeta tiene un `.env.example` con todas las variables. Los archivos `.env
 ```bash
 # Backend
 python manage.py check
+python manage.py test lugares.tests
 ruff check .                  # requiere: pip install ruff
 
 # Frontend
