@@ -1,5 +1,4 @@
 import React from 'react';
-import { Trash2, Pencil } from 'lucide-react';
 // Importa tu logo local:
 import appLogo from './assets/logo.png';
 
@@ -15,9 +14,6 @@ const LugarCard = ({
     lugar,
     onPlaceClick,
     deporteIdToNameMap = {},
-    isSuperAdmin = false,
-    onDelete,
-    onEdit,
     isDetailOpen = false,
     serviciosOfertados = [],
 }) => {
@@ -140,38 +136,6 @@ const LugarCard = ({
                         ))}
                     </ul>
                 </div>
-            )}
-
-            {/* Botón eliminar solo para superadmin */}
-            {isSuperAdmin && typeof onDelete === 'function' && (
-                <button
-                    type="button"
-                    className="mt-4 p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
-                    onClick={e => {
-                        e.stopPropagation();
-                        if (window.confirm(`¿Seguro que quieres eliminar "${lugar.nombre}"?`)) {
-                            onDelete(lugar);
-                        }
-                    }}
-                    title="Eliminar lugar"
-                >
-                    <Trash2 size={18} />
-                </button>
-            )}
-
-            {/* Botón editar lugar */}
-            {typeof onEdit === 'function' && (
-                <button
-                    type="button"
-                    className="mt-2 p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
-                    onClick={e => {
-                        e.stopPropagation();
-                        onEdit(lugar);
-                    }}
-                    title="Editar lugar"
-                >
-                    <Pencil size={18} />
-                </button>
             )}
         </div>
     );
