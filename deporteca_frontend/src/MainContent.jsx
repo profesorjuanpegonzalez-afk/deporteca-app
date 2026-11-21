@@ -6,10 +6,6 @@ import PlaceAutocomplete from './PlaceAutocomplete';
 function MainContent(props) {
     const {
         filteredLugares = [],
-        userName = '',
-        isSuperAdmin = false,
-        onShowAdminModal = () => {},
-        onShowEntityRegistration = () => {},
         handleFilterChange = null,
         searchTerm = '',
         setSearchTerm = () => {},
@@ -57,31 +53,6 @@ function MainContent(props) {
     return (
         <>
             <div className="min-h-screen bg-gray-100 font-sans text-gray-900">
-                <header className="shadow-sm sticky top-0 z-40 bg-white">
-                    <div className="container mx-auto flex justify-between items-center py-4">
-                        <div className="flex items-center">
-                            <a href="/" aria-label="Ir al inicio" className="inline-flex items-center">
-                                <img src={require('./assets/logo.png')} alt="Deporteca Logo" className="h-16 w-auto mr-4 ml-4" />
-                            </a>
-                            <span className="text-2xl font-bold text-blue-900">DEPORTECA</span>
-                        </div>
-                        <nav className="flex items-center space-x-4 pr-6">
-                            <button
-                                onClick={onShowEntityRegistration}
-                                className="p-2 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
-                                title="Registrar entidad"
-                            >
-                                Registrar entidad
-                            </button>
-                            {isSuperAdmin && (
-                                <>
-                                    <button onClick={onShowAdminModal} className="p-2 rounded-full bg-gray-700 text-white hover:bg-gray-900 transition-colors">Admin</button>
-                                </>
-                            )}
-                            <span className="text-gray-700 font-semibold">{userName}</span>
-                        </nav>
-                    </div>
-                </header>
                 <main className="container mx-auto p-4 flex flex-col lg:flex-row gap-8">
                     <aside className="lg:w-1/4 bg-white p-6 rounded-3xl shadow-xl h-fit sticky top-20">
                         <div className="mb-4">

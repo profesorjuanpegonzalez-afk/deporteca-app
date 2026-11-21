@@ -15,7 +15,7 @@ flowchart LR
     DA --> DB
 ```
 
-- **Frontend** (`deporteca_frontend/`): una única aplicación React. `App.js` es el componente principal: guarda casi todo el estado, carga los catálogos y lanza las búsquedas. Los demás componentes (`MainContent`, `LugarCard`, `MapComponent`, etc.) reciben datos y funciones por props.
+- **Frontend** (`deporteca_frontend/`): una única aplicación React. `App.js` es el componente principal: guarda casi todo el estado, carga los catálogos y lanza las búsquedas. Los demás componentes (`MainContent`, `LugarCard`, `MapComponent`, etc.) reciben datos y funciones por props. Las páginas usan `react-router-dom`: `Header.jsx` es el menú superior y las rutas (`/`, `/ranking`, `/articulos`, `/contacto`) se definen en `App.js`; las páginas nuevas van en `src/pages/`. En producción, el servidor debe devolver `index.html` para cualquier ruta.
 - **Backend** (`deporteca_project/`): un proyecto Django con una sola app, `lugares`, que contiene modelos, API (DRF), filtros, señales y la configuración del Django admin.
 - **Django admin** (`/admin/`): es el panel real de gestión. Aquí se revisan solicitudes, se aprueban entidades, se crean, editan y borran lugares y se editan catálogos. La app web no tiene edición de lugares.
 
