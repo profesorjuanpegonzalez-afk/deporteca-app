@@ -1,7 +1,11 @@
+from unittest import mock
+
 from django.contrib.auth import get_user_model
 from rest_framework import status
+from geopy.exc import GeocoderServiceError
 from rest_framework.test import APITestCase
 
+from .filters import LugarFilter
 from .models import Lugar
 
 
@@ -122,3 +126,30 @@ class CerradoPorDefectoTests(APITestCase):
     def test_servicios_escritura_cerrada(self):
         self.assertEqual(self.client.post('/api/servicios/', {'nombre': 'X'}, format='json').status_code,
                          status.HTTP_403_FORBIDDEN)
+
+
+class FiltroRadioLogTests(APITestCase):
+    """Los avisos del filtro por radio van al log, sin la dirección buscada (#83)."""
+
+    DIRECCION = 'Calle Inventada 123, Madrid'
+
+    def _filtrar(self, datos):
+        with self.assertLogs('lugares.filters', level='WARNING') as logs:
+            LugarFilter(datos, queryset=Lugar.objects.all()).qs.count()
+        salida = '\n'.join(logs.output)
+        self.assertNotIn(self.DIRECCION, salida)
+        return salida
+
+    def test_error_de_geocodificacion(self):
+        with mock.patch('lugares.filters.Nominatim') as nominatim:
+            nominatim.return_value.geocode.side_effect = GeocoderServiceError(f'fallo con {self.DIRECCION}')
+            salida = self._filtrar({'address_query': self.DIRECCION, 'radio_km': '5'})
+        self.assertIn('GeocoderServiceError', salida)
+
+    def test_direccion_no_encontrada(self):
+        with mock.patch('lugares.filters.Nominatim') as nominatim:
+            nominatim.return_value.geocode.return_value = None
+            self._filtrar({'address_query': self.DIRECCION, 'radio_km': '5'})
+
+    def test_coordenadas_no_validas(self):
+        self._filtrar({'latitud': 'x', 'longitud': 'y', 'radio_km': '5'})
