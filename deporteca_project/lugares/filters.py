@@ -1,3 +1,5 @@
+import logging
+
 import django_filters
 from django.db.models import Q
 from geopy.distance import geodesic
@@ -6,6 +8,8 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 
 from .models import Lugar, OfertaDeportiva, Deporte, Sexo, CategoriaEdad, Provincia, ComunidadAutonoma, TipoEvento, Evento # Importar Evento y TipoEvento
+
+logger = logging.getLogger(__name__)
 
 class LugarFilter(django_filters.FilterSet):
     # Filtros de búsqueda directa (sin cambios)
@@ -112,17 +116,19 @@ class LugarFilter(django_filters.FilterSet):
                     user_point = Point(location.latitude, location.longitude)
                     current_radius_km = float(radius_km)
                 else:
-                    print(f"Advertencia: Dirección '{address_query}' no encontrada. No se aplicará filtro de radio.")
+                    # Sin la dirección buscada: puede ser un dato personal (#83).
+                    logger.warning("Dirección no encontrada; no se aplica el filtro de radio.")
                     return queryset
             except (GeocoderTimedOut, GeocoderServiceError, ValueError, TypeError) as e:
-                print(f"Error geocodificando la dirección '{address_query}': {e}. No se aplicará filtro de radio.")
+                # Solo el tipo de error: el texto de geopy puede incluir la dirección buscada.
+                logger.warning("Error geocodificando la dirección (%s); no se aplica el filtro de radio.", type(e).__name__)
                 return queryset
         elif user_lat and user_lon and radius_km:
             try:
                 user_point = Point(float(user_lat), float(user_lon))
                 current_radius_km = float(radius_km)
             except (ValueError, TypeError):
-                print("Advertencia: Latitud/Longitud/Radio no son números válidos. No se aplicará filtro de radio.")
+                logger.warning("Latitud, longitud o radio no válidos; no se aplica el filtro de radio.")
                 return queryset
         else:
             return queryset
