@@ -1,0 +1,39 @@
+# Actualizaciones automáticas de dependencias (#81).
+# Mensual y agrupado para no llenar la lista de PR: las versiones menores y
+# parches van juntas en un PR por carpeta; las versiones mayores, por separado.
+# No hay CI: antes de fusionar, ejecuta las comprobaciones de CONTRIBUTING.md.
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /deporteca_project
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    labels: [backend, infra]
+    commit-message:
+      prefix: chore
+    groups:
+      backend-menores:
+        update-types: [minor, patch]
+
+  - package-ecosystem: npm
+    directory: /deporteca_frontend
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    labels: [frontend, infra]
+    commit-message:
+      prefix: chore
+    groups:
+      frontend-menores:
+        update-types: [minor, patch]
+
+  - package-ecosystem: docker
+    directories:
+      - /deporteca_project
+      - /deporteca_frontend
+    schedule:
+      interval: monthly
+    labels: [infra]
+    commit-message:
+      prefix: chore

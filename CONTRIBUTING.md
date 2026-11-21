@@ -103,6 +103,22 @@ En GitHub aparece el botón **"Compare & pull request"**. La plantilla del PR te
 
 La otra persona revisa el PR. **Nadie acepta (merge) su propio PR sin revisión.** Si hay comentarios, haz los cambios en la misma rama y vuelve a subir (`git push`): el PR se actualiza solo.
 
+## Actualizaciones automáticas (Dependabot)
+
+Una vez al mes, Dependabot abre PR que actualizan las dependencias (configuración en `.github/dependabot.yml`):
+
+- **Un PR por carpeta con las versiones menores y parches** (`backend-menores`, `frontend-menores`). Suelen ser seguros.
+- **Un PR por cada versión mayor** (por ejemplo, Django 5 → 6). Pueden romper cosas: léelos con calma.
+- **Imágenes de Docker** (`python`, `node`) en sus propios PR.
+
+Estos PR los revisa el **mantenedor**. No hay pruebas automáticas, así que antes de aceptar uno:
+
+1. Baja la rama del PR (`gh pr checkout <número>` o desde la web).
+2. Ejecuta las comprobaciones del paso 4 de la parte que cambia (backend o frontend).
+3. Si todo pasa, acéptalo. Si algo falla, deja un comentario en el PR y ciérralo o arréglalo en la misma rama.
+
+Si un PR de Dependabot no interesa (por ejemplo, una versión mayor que todavía no toca), coméntale `@dependabot ignore this major version` y no volverá a proponerla.
+
 ## Reglas que no se saltan
 
 - **Nunca subir directamente a `main`** ni hacer `git push --force` a `main`.
