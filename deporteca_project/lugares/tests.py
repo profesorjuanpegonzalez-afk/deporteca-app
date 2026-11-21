@@ -9,6 +9,12 @@ from .filters import LugarFilter
 from .models import Lugar
 
 
+def crear_lugar_publicable(nombre, **campos):
+    datos = {'estado_aprobacion': 'approved', 'cif': f'B{abs(hash(nombre)) % 10**8:08d}', 'suscripcion_activa': True}
+    datos.update(campos)
+    return Lugar.objects.create(nombre=nombre, **datos)
+
+
 class LugarApiSoloLecturaTests(APITestCase):
     """La API de lugares es de solo lectura; se gestionan en el admin de Django (#9)."""
 
@@ -49,9 +55,10 @@ class LugarApiSoloLecturaTests(APITestCase):
         self._comprobar_sin_escritura(status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_lectura_publica(self):
+        publicable = crear_lugar_publicable('Club publicable')
         for url in [
             '/api/lugares/',
-            f'/api/lugares/{self.lugar.id}/',
+            f'/api/lugares/{publicable.id}/',
             '/api/lugares/busqueda-avanzada/',
             '/api/lugares/tipos-lugar/',
             '/api/deportes/',
@@ -153,3 +160,71 @@ class FiltroRadioLogTests(APITestCase):
 
     def test_coordenadas_no_validas(self):
         self._filtrar({'latitud': 'x', 'longitud': 'y', 'radio_km': '5'})
+
+
+class RaizApiCerradaTests(APITestCase):
+    """La página índice /api/ queda cerrada a propósito (IsAdminUser por defecto); las rutas públicas siguen abiertas."""
+
+    def test_raiz_api_cerrada(self):
+        self.assertEqual(self.client.get('/api/').status_code, status.HTTP_403_FORBIDDEN)
+
+
+class LugaresPublicablesTests(APITestCase):
+    """El público solo recibe lugares publicables; el personal los ve todos (#10)."""
+
+    @classmethod
+    def setUpTestData(cls):
+        User = get_user_model()
+        cls.staff = User.objects.create_user('personal', password='x', is_staff=True)
+        cls.usuario = User.objects.create_user('usuario', password='x')
+        cls.publicable = crear_lugar_publicable('Club activo')
+        cls.ocultos = [
+            crear_lugar_publicable('Club pendiente', estado_aprobacion='pending'),
+            crear_lugar_publicable('Club rechazado', estado_aprobacion='rejected'),
+            crear_lugar_publicable('Club inactivo', estado_aprobacion='inactive'),
+            crear_lugar_publicable('Club sin CIF', cif=''),
+            crear_lugar_publicable('Club sin cuota', suscripcion_activa=False),
+        ]
+        cls.ocultos.append(crear_lugar_publicable('Club con documentación pendiente'))
+        Lugar.objects.filter(pk=cls.ocultos[-1].pk).update(requiere_documentacion=True)
+
+    def _ids_listado(self):
+        respuesta = self.client.get('/api/lugares/')
+        self.assertEqual(respuesta.status_code, status.HTTP_200_OK)
+        datos = respuesta.json()
+        filas = datos['results'] if isinstance(datos, dict) else datos
+        return {fila['id'] for fila in filas}
+
+    def test_anonimo_solo_ve_publicables(self):
+        self.assertEqual(self._ids_listado(), {self.publicable.id})
+
+    def test_usuario_normal_solo_ve_publicables(self):
+        self.client.force_authenticate(self.usuario)
+        self.assertEqual(self._ids_listado(), {self.publicable.id})
+
+    def test_personal_ve_todos(self):
+        self.client.force_authenticate(self.staff)
+        self.assertEqual(self._ids_listado(), {self.publicable.id, *(l.id for l in self.ocultos)})
+
+    def test_detalle_oculto_da_404(self):
+        for lugar in self.ocultos:
+            with self.subTest(lugar=lugar.nombre):
+                respuesta = self.client.get(f'/api/lugares/{lugar.id}/')
+                self.assertEqual(respuesta.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_regla_igual_que_el_modelo(self):
+        for lugar in Lugar.objects.all():
+            with self.subTest(lugar=lugar.nombre):
+                self.assertEqual(lugar.id in self._ids_listado(), lugar.puede_publicar_contenido)
+
+
+class ErroresSinDetalleInternoTests(APITestCase):
+    """Los errores no devuelven el texto interno de la excepción (#11)."""
+
+    def test_sugerencias_direccion_error_generico(self):
+        with mock.patch('lugares.views.Nominatim') as nominatim, self.assertLogs('lugares.views', level='ERROR') as logs:
+            nominatim.return_value.geocode.side_effect = RuntimeError('detalle-interno-secreto')
+            respuesta = self.client.get('/api/address-suggestions/search/', {'query': 'Madrid'})
+        self.assertEqual(respuesta.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertNotIn('detalle-interno-secreto', respuesta.content.decode())
+        self.assertIn('detalle-interno-secreto', '\n'.join(logs.output))

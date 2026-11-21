@@ -11,8 +11,8 @@ En desarrollo, abre `http://127.0.0.1:8000/api/` en el navegador para usar la **
 
 | Método | Ruta | Permiso | Descripción |
 |---|---|---|---|
-| GET | `/api/lugares/` | Público | Listado con filtros (`LugarFilter`). Devuelve **todos** los lugares, también los no publicables |
-| GET | `/api/lugares/{id}/` | Público | Detalle de un lugar |
+| GET | `/api/lugares/` | Público | Listado con filtros (`LugarFilter`). El público solo recibe lugares **publicables**; el personal los ve todos |
+| GET | `/api/lugares/{id}/` | Público | Detalle de un lugar (404 si no es publicable, salvo para el personal) |
 | GET | `/api/lugares/busqueda-avanzada/` | Público | **Búsqueda principal** (ver abajo) |
 | GET | `/api/lugares/tipos-lugar/` | Público | Valores posibles de `tipo` |
 | GET | `/api/lugares/{id}/estado-publicacion/` | Admin | Si el lugar es publicable y qué le falta |

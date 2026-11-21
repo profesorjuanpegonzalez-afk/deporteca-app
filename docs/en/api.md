@@ -14,8 +14,8 @@ In development, open `http://127.0.0.1:8000/api/` in a browser to use DRF's **br
 
 | Method | Path | Permission | Description |
 |---|---|---|---|
-| GET | `/api/lugares/` | Public | List with filters (`LugarFilter`). Returns **all** venues, including non-publishable ones |
-| GET | `/api/lugares/{id}/` | Public | Venue detail |
+| GET | `/api/lugares/` | Public | List with filters (`LugarFilter`). The public only gets **publishable** venues; staff see all of them |
+| GET | `/api/lugares/{id}/` | Public | Venue detail (404 if not publishable, except for staff) |
 | GET | `/api/lugares/busqueda-avanzada/` | Public | **Main search** (see below) |
 | GET | `/api/lugares/tipos-lugar/` | Public | Possible `tipo` values |
 | GET | `/api/lugares/{id}/estado-publicacion/` | Admin | Whether the venue is publishable and what it's missing |
