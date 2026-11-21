@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import viewsets, status # pyright: ignore[reportMissingImports]
 from rest_framework.response import Response # pyright: ignore[reportMissingImports]
 from rest_framework.decorators import action # pyright: ignore[reportMissingImports]
@@ -6,7 +8,6 @@ from django.db.models import Q
 from django.db.models import Case, When, Value, IntegerField, Count
 from django.db.models.functions import TruncDate
 from geopy.geocoders import Nominatim # pyright: ignore[reportMissingImports]
-from geopy.exc import GeocoderTimedOut, GeocoderServiceError # pyright: ignore[reportMissingImports]
 from geopy.distance import geodesic # pyright: ignore[reportMissingImports]
 
 from .models import (
@@ -25,6 +26,17 @@ from .serializers import (
 )
 from .filters import LugarFilter
 
+logger = logging.getLogger(__name__)
+
+
+def lugares_publicables(queryset):
+    """Misma regla que Lugar.puede_publicar_contenido, pero como filtro de base de datos."""
+    return (
+        queryset.filter(estado_aprobacion='approved', requiere_documentacion=False, suscripcion_activa=True)
+        .exclude(cif__isnull=True)
+        .exclude(cif='')
+    )
+
 class LugarViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Lugares: lectura pública, acciones de administración solo para el personal.
@@ -34,6 +46,13 @@ class LugarViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = LugarSerializer
     filterset_class = LugarFilter
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        # El público solo ve lugares publicables; el personal los ve todos (#10).
+        qs = super().get_queryset()
+        if self.request.user and self.request.user.is_staff:
+            return qs
+        return lugares_publicables(qs)
 
     @action(detail=True, methods=['get'], url_path='estado-publicacion', permission_classes=[IsAdminUser])
     def estado_publicacion(self, request, pk=None):
@@ -362,14 +381,11 @@ class AddressSuggestionView(viewsets.ViewSet):
                 return Response(suggestions)
             else:
                 return Response([]) # Devolver una lista vacía si no hay resultados
-        except (GeocoderTimedOut, GeocoderServiceError) as e:
+        except Exception:
+            # El detalle va al log del servidor, nunca al cliente (#11).
+            logger.exception("Error al obtener sugerencias de dirección")
             return Response(
-                {"error": f"Error en el servicio de geocodificación: {e}"},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-        except Exception as e:
-            return Response(
-                {"error": f"Error inesperado: {e}"},
+                {"error": "No se pudieron obtener sugerencias de dirección. Inténtalo de nuevo más tarde."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 

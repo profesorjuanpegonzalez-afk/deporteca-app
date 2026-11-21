@@ -7,10 +7,6 @@ Issues found during the code review (October 2026), ordered by priority. When on
 
 ## 🔴 Before deploying
 
-### `/api/lugares/` also lists non-publishable venues
-
-The list and detail endpoints return every venue, including `pending`, `rejected` and `inactive` ones. Only `busqueda-avanzada` filters by publishable.
-
 ### The Google keys need restrictions
 
 `REACT_APP_*` variables end up in the public JavaScript. The Google key (Firebase + Places) must be restricted by domain and by API in Google Cloud Console.
@@ -48,7 +44,6 @@ Over 1000 lines holding almost all the state and logic. The backend URL is defin
 - **OpenStreetMap tiles in production.** By default the map uses the OpenStreetMap tile servers, whose [usage policy](https://operations.osmfoundation.org/policies/tiles/) doesn't allow heavy use. That's fine for the pilot; with more traffic, configure another provider with `REACT_APP_MAP_TILE_URL`.
 - **The search error message has a hardcoded URL.** "No se ha podido conectar con el backend de búsqueda" always says `http://127.0.0.1:8000`, even when `REACT_APP_BACKEND_API_BASE` is different.
 - **Nominatim** is used for autocomplete and geocoding. Its usage policy forbids autocomplete and heavy use; production needs another provider or a self-hosted instance.
-- **Internal errors exposed.** Several `except Exception` blocks return the error text to the client.
 - **Few tests.** `lugares/tests.py` only covers the API permissions.
 - **11 ESLint warnings** in the frontend. In CI, `CI=true` makes `npm run build` treat them as errors.
 - **Old Firestore scripts.** `migrate_to_firestore.py`, `deporteca_frontend/populate_regions.py` and `addProvincias.js` date from the Firebase stage and need credentials that aren't in the repo.
