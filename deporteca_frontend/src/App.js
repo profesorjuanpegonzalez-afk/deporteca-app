@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, onSnapshot, addDoc, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
@@ -8,6 +9,8 @@ import MainContent from './MainContent.jsx';
 import PlaceDetailModal from './PlaceDetailModal.jsx';
 import AdminContentManager from './AdminContentManager.jsx';
 import EntityRegistrationModal from './EntityRegistrationModal.jsx';
+import Header from './Header.jsx';
+import Proximamente from './pages/Proximamente.jsx';
 
 import appLogo from './assets/logo.png';
 
@@ -799,9 +802,11 @@ function App() {
         }
     };
 
+    // Página de inicio: buscador inicial, carga, error o resultados (#24: el menú va por encima de todas).
+    let inicio;
     if (showLanding) {
-        return (
-            <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center font-sans">
+        inicio = (
+            <div className="min-h-[calc(100vh-4.5rem)] bg-gray-100 flex flex-col items-center justify-center font-sans p-4">
                 <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md flex flex-col gap-6">
                     <div className="flex flex-col items-center mb-2">
                         <img src={appLogo} alt="Logo" className="h-20 mb-2" />
@@ -867,10 +872,8 @@ function App() {
                 </div>
             </div>
         );
-    }
-
-    if (isLoading) {
-        return (
+    } else if (isLoading) {
+        inicio = (
             <div className="flex items-center justify-center min-h-screen bg-gray-100 p-8">
                 <div className="text-center">
                     <div className="w-16 h-16 border-4 border-purple-700 border-dashed rounded-full animate-spin mx-auto mb-4"></div>
@@ -878,10 +881,8 @@ function App() {
                 </div>
             </div>
         );
-    }
-
-    if (error) {
-        return (
+    } else if (error) {
+        inicio = (
             <div className="flex items-center justify-center min-h-screen bg-red-50 p-8">
                 <div className="bg-white p-6 rounded-lg shadow-md text-center">
                     <p className="text-red-600 font-semibold mb-2">Ha ocurrido un error:</p>
@@ -889,28 +890,41 @@ function App() {
                 </div>
             </div>
         );
-    }
-
-    return (
-        <>
+    } else {
+        inicio = (
             <MainContent
                 {...commonProps}
                 filteredLugares={filteredLugares}
                 onLoadMore={() => fetchFilteredLugares(false)}
                 hasMoreLugares={hasMoreLugares}
-                isSuperAdmin={isSuperAdmin}
                 userRole={userRole}
-                onShowAdminModal={() => setShowAdminModal(true)}
-                onShowEntityRegistration={() => setShowEntityRegistrationModal(true)}
                 deportes={deportes}
                 setShowPlaceDetailModal={setShowPlaceDetailModal}
-                userName={userName}
                 handleChangeUserName={handleChangeUserName}
                 logoFile={logoFile}
                 setLogoFile={setLogoFile}
                 tiposLugar={tiposLugar}
                 tiposServicio={commonProps.tiposServicio}
             />
+        );
+    }
+
+    return (
+        <>
+            <Header
+                onInicio={() => setShowLanding(true)}
+                onShowEntityRegistration={() => setShowEntityRegistrationModal(true)}
+                isSuperAdmin={isSuperAdmin}
+                onShowAdminModal={() => setShowAdminModal(true)}
+                userName={userName}
+            />
+            <Routes>
+                <Route path="/" element={inicio} />
+                <Route path="/ranking" element={<Proximamente titulo="Ranking" />} />
+                <Route path="/articulos" element={<Proximamente titulo="Artículos" />} />
+                <Route path="/contacto" element={<Proximamente titulo="Contacto" />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
             {/* Modal de detalle de lugar */}
             {showPlaceDetailModal && (
                 <PlaceDetailModal
